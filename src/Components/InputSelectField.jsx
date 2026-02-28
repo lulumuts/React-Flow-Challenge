@@ -20,8 +20,9 @@ const FIELD_ICONS = {
 };
 
 const FieldIcon = ({ icon }) => {
+  if (!icon) return null;
   const IconComponent = FIELD_ICONS[icon] || FIELD_ICONS.text;
-  return <IconComponent sx={{ fontSize: 20, mr: 1.5, color: 'action.active' }} />;
+  return IconComponent ? <IconComponent sx={{ fontSize: 20, mr: 1.5, color: 'action.active' }} /> : null;
 };
 
 export default function InputSelectField({ data, value, onChange, options = [] }) {

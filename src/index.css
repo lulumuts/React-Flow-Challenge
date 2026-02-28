@@ -54,6 +54,20 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* TipTap / ProseMirror editor styles */
+.ProseMirror {
+  min-height: 24px;
+  padding: 8px 12px;
+  font-size: 0.8rem;
+  outline: none;
+}
+.ProseMirror p {
+  margin: 0 0 0.5em 0;
+}
+.ProseMirror p:last-child {
+  margin-bottom: 0;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;

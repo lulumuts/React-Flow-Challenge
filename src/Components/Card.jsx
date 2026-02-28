@@ -2,10 +2,9 @@ import { useState } from 'react';
 import Card from '@mui/material/Card';
 import { Handle, Position } from '@xyflow/react';
 import InputSelectField from './InputSelectField';
-import InputTextField from './InputTextField';
-import BooleanInputField from './BooleanInputField';
-import DateInputField from './DateInputField';
-import EnumInputField from './EnumInputField';
+import TiptapValueField from './TiptapValueField';
+
+const EMPTY_OPTION = { value: '', label: 'Select a field...' };
 
 const LANGUAGE_OPTIONS = [
   { value: 'eng', label: 'English' },
@@ -32,8 +31,10 @@ const FIELD_OPTIONS = [
 ];
 
 export default function CardForm() {
-  const [selectedField, setSelectedField] = useState('name');
+  const [selectedField, setSelectedField] = useState('');
   const selectedOption = FIELD_OPTIONS.find((opt) => opt.value === selectedField);
+  const hasFieldSelected = selectedField !== '';
+  const selectOptions = [EMPTY_OPTION, ...FIELD_OPTIONS];
 
   return (
     <div style={{ width: 280 }}>
@@ -46,24 +47,12 @@ export default function CardForm() {
           <InputSelectField
             value={selectedField}
             onChange={(v) => setSelectedField(v)}
-            options={FIELD_OPTIONS}
+            options={selectOptions}
           />
-          {selectedOption?.type === 'text' && (
-            <InputTextField label={selectedOption.label} />
-          )}
-          {selectedOption?.type === 'boolean' && (
-            <BooleanInputField label={selectedOption.label} embedded />
-          )}
-          {selectedOption?.type === 'date' && (
-            <DateInputField label={selectedOption.label} embedded />
-          )}
-          {selectedOption?.type === 'enum' && (
-            <EnumInputField
-              label={selectedOption.label}
-              options={selectedOption.options || []}
-              embedded
-            />
-          )}
+          <TiptapValueField
+            label={selectedOption?.label ?? 'Value'}
+            editable={hasFieldSelected}
+          />
         </div>
       </Card>
 
