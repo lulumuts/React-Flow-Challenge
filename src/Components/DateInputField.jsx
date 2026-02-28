@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Handle, Position } from '@xyflow/react';
 import TextField from '@mui/material/TextField';
 
-export default function DateInputField({ data, label = 'Date', defaultValue, min, max }) {
+export default function DateInputField({ data, label = 'Date', defaultValue, min, max, embedded = false }) {
   const parseInitial = (val) => {
     if (val == null) return '';
     if (typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val)) return val;
@@ -14,22 +14,28 @@ export default function DateInputField({ data, label = 'Date', defaultValue, min
   );
 
   return (
-    <div style={{ width: 232, padding: 8 }} className="nodrag">
-      <Handle type="target" position={Position.Top} />
+    <div style={{ width: 232, padding: 8, display: 'flex', alignItems: 'center', gap: 8 }} className="nodrag">
+      {!embedded && <Handle type="target" position={Position.Top} />}
 
+      <label style={{ fontSize: '0.8rem', minWidth: 48, flexShrink: 0 }}>{label}</label>
       <TextField
         fullWidth
         size="small"
         type="date"
-        label={label}
         value={value}
         onChange={(e) => setValue(e.target.value)}
-        InputLabelProps={{ sx: { fontSize: '0.8rem' } }}
         inputProps={{ min, max }}
         InputProps={{ sx: { '& input': { fontSize: '0.8rem' } } }}
+        sx={{
+          flex: 1,
+          '& .MuiOutlinedInput-root': {
+            borderRadius: '12px',
+            height: 40
+          }
+        }}
       />
 
-      <Handle type="source" position={Position.Bottom} id="a" />
+      {!embedded && <Handle type="source" position={Position.Bottom} id="a" />}
     </div>
   );
 }

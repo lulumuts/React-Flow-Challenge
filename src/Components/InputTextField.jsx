@@ -1,18 +1,30 @@
 import { useCallback } from "react";
-import { Position, Handle } from "@xyflow/react";
+import TextField from "@mui/material/TextField";
 
-export default function InputTextField () {
+export default function InputTextField({ label = 'Value' }) {
     const onChange = useCallback((evt) => {
-        console.log(evt.target.value)
-    },[]);
+        console.log(evt.target.value);
+    }, []);
 
     return (
-        <div className="text-updater-node">
-            <div>
-                <label htmlFor="text">Text:</label>
-                <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={onChange}  />
-                <Handle type="source" position={Position.Bottom} id="a" />
-            </div>
+        <div style={{ width: 232, padding: 8, display: 'flex', alignItems: 'center', gap: 8 }} className="nodrag">
+            <label style={{ fontSize: '0.8rem', minWidth: 48, flexShrink: 0 }}>{label}</label>
+            <TextField
+                id="value-input"
+                variant="outlined"
+                size="small"
+                fullWidth
+                onChange={onChange}
+                InputProps={{ sx: { '& input': { fontSize: '0.8rem' } } }}
+                sx={{
+                flex: 1,
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  height: 40
+                },
+                '& .MuiOutlinedInput-input': { py: 1 }
+              }}
+            />
         </div>
-    )
+    );
 }
