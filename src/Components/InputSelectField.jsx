@@ -1,28 +1,31 @@
 import * as React from 'react';
 import { Handle, Position } from '@xyflow/react';
-import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-export default function InputSelectNode({ data }) {
+export default function InputSelectField({ data }) {
   const [age, setAge] = React.useState(data?.value || '');
 
   return (
-    <div style={{ width: 180, padding: 8 }}>
+    <div style={{ width: 232, padding: 8 }}>
       <Handle type="target" position={Position.Top} />
 
-      <div className="drag-handle" style={{ cursor: 'grab', fontSize: 12 }}>
-        Drag
-      </div>
-
       <FormControl fullWidth size="small">
-        <InputLabel>Age</InputLabel>
+        <InputLabel sx={{ fontSize: '0.5rem' }}>Age</InputLabel>
         <Select
           value={age}
           label="Age"
           onChange={(e) => setAge(e.target.value)}
+          MenuProps={{
+            PaperProps: {
+            sx: {
+              width: 300,
+              left: 32
+            },
+          },
+        }}
         >
           <MenuItem value={10}>Ten</MenuItem>
           <MenuItem value={20}>Twenty</MenuItem>

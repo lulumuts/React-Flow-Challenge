@@ -9,9 +9,9 @@ import {
   addEdge 
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { TextUpdaterNode } from './TextUpdaterNode';
-import { CustomEdge } from './CustomEdge';
-import InputSelectNode from './InputSelectNode';
+import { CustomEdge } from './Components/CustomEdge';
+import  Card  from './Components/Card';
+
 
 const edgeTypes = {
     'custom-edge': CustomEdge
@@ -20,17 +20,16 @@ const edgeTypes = {
 const initialNodes = [
   { 
     id: 'n1',
-    type: 'selectUpdater',
+    type: 'cardForm',
     position: { x: 0, y: 0 },
-    data: { value: 123 },
-    dragHandle: '.drag-handle',
+   data: { label: 'Node 1' } 
   },
   { id: 'n2',
-    position: { x: 0, y: 100 },
+    position: { x: 0, y: 200 },
     data: { label: 'Node 2' } 
   },
   { id: 'n3',
-    position: { x: 0, y: 200 },
+    position: { x: 0, y: 300 },
     data: { label: 'Node 3' } 
   },
 ];
@@ -71,7 +70,7 @@ export default function App() {
   );
 
   const nodeTypes = {
-    selectUpdater: InputSelectNode,
+    cardForm: Card,
   }
 
  
