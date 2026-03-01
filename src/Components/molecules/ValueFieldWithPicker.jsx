@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { ClearButton } from '../atoms';
 import TiptapValueField from './TiptapValueField';
 import DatePickerButton from './DatePickerButton';
@@ -24,14 +24,18 @@ export default function ValueFieldWithPicker({
   label = 'Value',
   fieldType = 'text',
   fieldOptions = [],
+  optionsLoader,
   value,
   onValueChange,
   editable,
   disabled = false
 }) {
   const valueContainerRef = useRef(null);
+  const [loadedOptions, setLoadedOptions] = useState([]);
+
+  const resolvedOptions = optionsLoader ? loadedOptions : fieldOptions;
   const hasPickerValue = ['date', 'boolean', 'enum'].includes(fieldType) && value != null && value !== '';
-  const displayValue = formatDisplayValue(fieldType, value, fieldOptions);
+  const displayValue = formatDisplayValue(fieldType, value, resolvedOptions);
 
   if (fieldType === 'text') {
     return (
@@ -94,7 +98,9 @@ export default function ValueFieldWithPicker({
               {fieldType === 'enum' && (
                 <EnumPickerButton
                   containerRef={valueContainerRef}
-                  options={fieldOptions}
+                  options={resolvedOptions}
+                  optionsLoader={optionsLoader}
+                  onOptionsLoaded={setLoadedOptions}
                   value={value}
                   onSelect={(v) => onValueChange?.(v)}
                 />

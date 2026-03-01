@@ -5,14 +5,14 @@ import { UserIcon, InfoCircleIcon } from '../atoms/ProfileHeaderIcons';
 import { Handle, Position } from '@xyflow/react';
 import InputSelectField from '../molecules/InputSelectField';
 import ValueFieldWithPicker from '../molecules/ValueFieldWithPicker';
-import { LANGUAGE_OPTIONS } from '../../lib/languageOptions';
+import { fetchLanguageOptions } from '../../lib/languageOptions';
 
 const FIELD_OPTIONS = [
   { value: 'name', label: 'Name', type: 'text', icon: 'text' },
   { value: 'surname', label: 'Surname', type: 'text', icon: 'text' },
   { value: 'location', label: 'Location', type: 'text', icon: 'location' },
   { value: 'opted_in', label: 'Opted In', type: 'boolean', icon: 'boolean' },
-  { value: 'language', label: 'Language', type: 'enum', icon: 'language', options: LANGUAGE_OPTIONS },
+  { value: 'language', label: 'Language', type: 'enum', icon: 'language', optionsLoader: fetchLanguageOptions },
   { value: 'birthday', label: 'Birthday', type: 'date', icon: 'date' },
   { value: 'is_blocked', label: 'Is Blocked', type: 'boolean', icon: 'boolean' },
   { value: 'my_private_field', label: 'my private field', type: 'text', icon: 'text' },
@@ -29,6 +29,7 @@ export default function CardForm() {
 
   const fieldType = selectedOption?.type ?? 'text';
   const fieldOptions = selectedOption?.options ?? [];
+  const optionsLoader = selectedOption?.optionsLoader;
   const hasPickerValue = ['date', 'boolean', 'enum'].includes(fieldType) && value != null && value !== '';
   const editable = fieldType === 'text' || !hasPickerValue;
 
@@ -108,6 +109,7 @@ export default function CardForm() {
             label="Value"
             fieldType={fieldType}
             fieldOptions={fieldOptions}
+            optionsLoader={optionsLoader}
             value={value}
             onValueChange={setValue}
             editable={hasFieldSelected && editable}

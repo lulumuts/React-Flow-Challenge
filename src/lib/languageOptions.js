@@ -1,36 +1,27 @@
 /**
- * Reduced ISO 639-3 language list for the Language enum field.
- * Covers ~100 common languages. Full ISO 639-3 (~8000) can be lazy-loaded later.
+ * Fetches ISO 639-3 language codes from SIL remotely.
+ * Format: [{ value: 'eng', label: 'English' }, ...]
  */
-export const LANGUAGE_OPTIONS = [
-  { value: 'eng', label: 'English' },
-  { value: 'spa', label: 'Spanish' },
-  { value: 'fra', label: 'French' },
-  { value: 'deu', label: 'German' },
-  { value: 'zho', label: 'Chinese' },
-  { value: 'ara', label: 'Arabic' },
-  { value: 'por', label: 'Portuguese' },
-  { value: 'jpn', label: 'Japanese' },
-  { value: 'rus', label: 'Russian' },
-  { value: 'hin', label: 'Hindi' },
-  { value: 'ben', label: 'Bengali' },
-  { value: 'urd', label: 'Urdu' },
-  { value: 'ind', label: 'Indonesian' },
-  { value: 'nld', label: 'Dutch' },
-  { value: 'ita', label: 'Italian' },
-  { value: 'kor', label: 'Korean' },
-  { value: 'tur', label: 'Turkish' },
-  { value: 'vie', label: 'Vietnamese' },
-  { value: 'tha', label: 'Thai' },
-  { value: 'pol', label: 'Polish' },
-  { value: 'ukr', label: 'Ukrainian' },
-  { value: 'ron', label: 'Romanian' },
-  { value: 'ces', label: 'Czech' },
-  { value: 'hun', label: 'Hungarian' },
-  { value: 'swe', label: 'Swedish' },
-  { value: 'ell', label: 'Greek' },
-  { value: 'bul', label: 'Bulgarian' },
-  { value: 'dan', label: 'Danish' },
-  { value: 'fin', label: 'Finnish' },
-  { value: 'nor', label: 'Norwegian' }
-];
+const ISO6393_URL = 'https://iso639-3.sil.org/sites/iso639-3/files/downloads/iso-639-3.tab';
+export async function fetchLanguageOptions() {
+  const url = `https://corsproxy.io/?url=${encodeURIComponent(ISO6393_URL)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`Failed to fetch languages: ${res.status}`);
+  const text = await res.text();
+  const lines = text.trim().split('\n');
+  const header = lines[0].split('\t');
+  const idIdx = header.indexOf('Id');
+  const refNameIdx = header.indexOf('Ref_Name');
+  if (idIdx < 0 || refNameIdx < 0) throw new Error('Invalid ISO 639-3 format');
+
+  const options = [];
+  for (let i = 1; i < lines.length; i++) {
+    const cols = lines[i].split('\t');
+    const id = cols[idIdx]?.trim();
+    const refName = cols[refNameIdx]?.trim();
+    if (id && refName) {
+      options.push({ value: id, label: refName });
+    }
+  }
+  return options;
+}

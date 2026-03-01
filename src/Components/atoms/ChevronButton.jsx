@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import IconButton from '@mui/material/IconButton';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
@@ -7,15 +8,15 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
  * Shows chevron by default, or calendar icon when icon="calendar" (e.g. for date/birthday).
  * Shows light purple background when active (dropdown open).
  */
-export default function ChevronButton({
+const ChevronButton = forwardRef(function ChevronButton({
   onClick,
   active = false,
   icon = 'chevron',
   'aria-label': ariaLabel = 'Open picker'
-}) {
+}, ref) {
   const Icon = icon === 'calendar' ? CalendarTodayIcon : KeyboardArrowDownIcon;
   return (
-    <IconButton
+    <IconButton ref={ref}
       size="small"
       onClick={onClick}
       aria-label={ariaLabel}
@@ -36,4 +37,6 @@ export default function ChevronButton({
       />
     </IconButton>
   );
-}
+});
+
+export default ChevronButton;

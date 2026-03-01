@@ -12,6 +12,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
   const [selectedIndex, setSelectedIndex] = useState(0);
   const suggestionPropsRef = useRef(null);
   const selectedIndexRef = useRef(0);
+  const filteredItemsRef = useRef(null);
 
   useEffect(() => {
     suggestionPropsRef.current = suggestionProps;
@@ -48,11 +49,12 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
             },
             onKeyDown: ({ event }) => {
               const props = suggestionPropsRef.current;
-              if (!props || props.items.length === 0) return false;
+              const items = (filteredItemsRef.current || props?.items) ?? [];
+              if (!props || items.length === 0) return false;
 
               if (event.key === 'ArrowDown') {
                 event.preventDefault();
-                setSelectedIndex((i) => Math.min(i + 1, props.items.length - 1));
+                setSelectedIndex((i) => Math.min(i + 1, items.length - 1));
                 return true;
               }
               if (event.key === 'ArrowUp') {
@@ -62,7 +64,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
               }
               if (event.key === 'Enter') {
                 event.preventDefault();
-                const item = props.items[selectedIndexRef.current];
+                const item = items[selectedIndexRef.current];
                 if (item) {
                   props.command(item);
                   setSuggestionProps(null);
@@ -143,6 +145,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
               suggestionProps={suggestionProps}
               selectedIndex={selectedIndex}
               setSelectedIndex={setSelectedIndex}
+              filteredItemsRef={filteredItemsRef}
               onClose={() => setSuggestionProps(null)}
             />,
             document.body
