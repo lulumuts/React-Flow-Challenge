@@ -23,7 +23,7 @@ export default function BooleanInputField({ data, label = 'Boolean', defaultValu
         sx={{
           flex: 1,
           margin: 0,
-          '& .MuiFormControlLabel-label': { fontSize: '0.8rem' }
+          '& .MuiFormControlLabel-label': { fontSize: '0.8rem', opacity: 0.7 }
         }}
       />
 

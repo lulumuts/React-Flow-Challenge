@@ -17,7 +17,7 @@ export default function DateInputField({ data, label = 'Date', defaultValue, min
     <div style={{ width: 232, padding: 8, display: 'flex', alignItems: 'center', gap: 8 }} className="nodrag">
       {!embedded && <Handle type="target" position={Position.Top} />}
 
-      <label style={{ fontSize: '0.8rem', minWidth: 48, flexShrink: 0 }}>{label}</label>
+      <label style={{ fontSize: '0.8rem', minWidth: 48, flexShrink: 0, opacity: 0.7 }}>{label}</label>
       <TextField
         fullWidth
         size="small"

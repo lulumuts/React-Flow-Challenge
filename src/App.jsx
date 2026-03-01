@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { 
   Background,
   Controls,
@@ -21,7 +21,8 @@ const initialNodes = [
     id: 'n1',
     type: 'cardForm',
     position: { x: 0, y: 0 },
-   data: { label: 'Node 1' } 
+    data: { label: 'Node 1' },
+    deletable: false
   },
   { id: 'n2',
     position: { x: 0, y: 200 },
@@ -54,7 +55,13 @@ const initialEdges = [
 export default function App() {
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
- 
+  const reactFlowRef = useRef(null);
+
+  const onInit = useCallback((instance) => {
+    reactFlowRef.current = instance;
+    instance.fitView({ padding: 0.2 });
+  }, []);
+
   const onNodesChange = useCallback(
     (changes) => setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
@@ -82,10 +89,12 @@ export default function App() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        onInit={onInit}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         colorMode="light"
         fitView
+        fitViewOptions={{ padding: 0.2 }}
       >
         <Controls />
         <MiniMap />

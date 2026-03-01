@@ -1,37 +1,35 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Popover from '@mui/material/Popover';
-import TextField from '@mui/material/TextField';
+import { StaticDatePicker } from '@mui/x-date-pickers/StaticDatePicker';
+import dayjs from 'dayjs';
 import { ChevronButton } from '../atoms';
 
 /**
- * Compact date picker trigger (⬇️). Opens date input on click.
+ * Compact date picker trigger. Opens calendar on click.
  * Stores ISO string, displays human-friendly format via parent.
  */
 export default function DatePickerButton({ onSelect, containerRef }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [menuWidth, setMenuWidth] = useState(160);
+  const [value, setValue] = useState(dayjs());
 
   const handleOpen = () => setAnchorEl(containerRef?.current ?? null);
   const handleClose = () => setAnchorEl(null);
 
-  useEffect(() => {
-    if (anchorEl) {
-      const w = anchorEl.getBoundingClientRect().width;
-      setMenuWidth(w > 0 ? w : 160);
-    }
-  }, [anchorEl]);
+  // StaticDatePicker needs ~320px to display calendar properly
+  const menuWidth = 320;
 
-  const handleChange = (e) => {
-    const v = e.target.value;
-    if (!v) return;
-    const iso = new Date(v + 'T00:00:00.000Z').toISOString();
-    onSelect(iso);
-    handleClose();
+  const handleChange = (date) => {
+    setValue(date ?? dayjs());
+    if (date) {
+      const iso = `${date.format('YYYY-MM-DD')}T00:00:00.000Z`;
+      onSelect(iso);
+      handleClose();
+    }
   };
 
   return (
     <>
-      <ChevronButton onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open date picker" />
+      <ChevronButton icon="calendar" onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open date picker" />
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}
@@ -39,14 +37,22 @@ export default function DatePickerButton({ onSelect, containerRef }) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         PaperProps={{
-          sx: { width: menuWidth, minWidth: menuWidth, maxWidth: 'none', borderRadius: 4 }
+          sx: { width: menuWidth, minWidth: menuWidth, borderRadius: 4 }
         }}
       >
-        <TextField
-          type="date"
+        <StaticDatePicker
+          value={value}
           onChange={handleChange}
-          InputProps={{ sx: { fontSize: '0.8rem' } }}
-          sx={{ p: 1 }}
+          slotProps={{
+            actionBar: { actions: ['today'] }
+          }}
+          sx={{
+            border: 'none',
+            width: '100%',
+            '& .MuiPickersCalendarHeader-root': { paddingLeft: 2, paddingRight: 2 },
+            '& .MuiDayCalendar-root': { width: '100%' },
+            '& .MuiPickersMonth-root': { width: '100%' }
+          }}
         />
       </Popover>
     </>

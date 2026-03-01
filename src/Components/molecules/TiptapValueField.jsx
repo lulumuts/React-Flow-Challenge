@@ -5,6 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention';
 import { filterExpressions } from '../../lib/expressionSuggestions';
 import ExpressionSuggestionList from './ExpressionSuggestionList';
+import atSignSvg from '../../assets/AtSign.svg';
 
 export default function TiptapValueField({ label = 'Value', editable = true, embedded = false }) {
   const [suggestionProps, setSuggestionProps] = useState(null);
@@ -96,15 +97,39 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         flex: 1,
         minWidth: 0,
         width: '100%',
+        display: 'flex',
+        alignItems: 'center',
         borderRadius: embedded ? 0 : 12,
         border: embedded ? 'none' : '1px solid rgba(0, 0, 0, 0.23)',
         minHeight: 40,
         backgroundColor: editable ? '#fff' : 'rgba(0, 0, 0, 0.04)',
         cursor: editable ? 'text' : 'not-allowed',
-        padding: embedded ? 0 : undefined
+        padding: embedded ? 0 : undefined,
+        overflow: 'hidden'
       }}
     >
-      <EditorContent editor={editor} />
+      <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
+        <EditorContent editor={editor} />
+      </div>
+      {!embedded && (
+        <span
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 28,
+            height: 28,
+            marginRight: 4,
+            flexShrink: 0,
+            borderRadius: '50%',
+            backgroundColor: 'transparent',
+            color: 'rgba(0, 0, 0, 0.5)'
+          }}
+          title="Type @ to insert expression"
+        >
+          <img src={atSignSvg} alt="" style={{ width: 14, height: 14 }} />
+        </span>
+      )}
     </div>
   );
 
@@ -137,7 +162,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
       }}
       className="nodrag"
     >
-      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8 }}>
+      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>
         {label}
       </label>
       {editorWrapper}

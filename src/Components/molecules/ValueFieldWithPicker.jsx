@@ -45,7 +45,7 @@ export default function ValueFieldWithPicker({
     <div
       style={{
         width: 248,
-        padding: '8px 8px',
+        padding: '6px 8px',
         display: 'flex',
         alignItems: 'flex-start',
         gap: 4,
@@ -54,7 +54,7 @@ export default function ValueFieldWithPicker({
       }}
       className="nodrag"
     >
-      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8 }}>{label}</label>
+      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>{label}</label>
       <div
         ref={valueContainerRef}
         style={{
@@ -84,9 +84,20 @@ export default function ValueFieldWithPicker({
             </div>
             <div style={{ marginLeft: 8, flexShrink: 0 }}>
               {fieldType === 'date' && <DatePickerButton containerRef={valueContainerRef} onSelect={(v) => onValueChange?.(v)} />}
-              {fieldType === 'boolean' && <BooleanPickerButton containerRef={valueContainerRef} onSelect={(v) => onValueChange?.(v)} />}
+              {fieldType === 'boolean' && (
+                <BooleanPickerButton
+                  containerRef={valueContainerRef}
+                  value={value}
+                  onSelect={(v) => onValueChange?.(v)}
+                />
+              )}
               {fieldType === 'enum' && (
-                <EnumPickerButton containerRef={valueContainerRef} options={fieldOptions} onSelect={(v) => onValueChange?.(v)} />
+                <EnumPickerButton
+                  containerRef={valueContainerRef}
+                  options={fieldOptions}
+                  value={value}
+                  onSelect={(v) => onValueChange?.(v)}
+                />
               )}
             </div>
           </>
