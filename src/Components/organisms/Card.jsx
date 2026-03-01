@@ -7,6 +7,8 @@ import InputSelectField from '../molecules/InputSelectField';
 import ValueFieldWithPicker from '../molecules/ValueFieldWithPicker';
 import { fetchLanguageOptions } from '../../lib/languageOptions';
 
+const EMPTY_OPTION = { value: '', label: 'Select a field...' };
+
 const FIELD_OPTIONS = [
   { value: 'name', label: 'Name', type: 'text', icon: 'text' },
   { value: 'surname', label: 'Surname', type: 'text', icon: 'text' },
@@ -21,11 +23,11 @@ const FIELD_OPTIONS = [
 ];
 
 export default function CardForm() {
-  const [selectedField, setSelectedField] = useState(FIELD_OPTIONS[0]?.value ?? '');
+  const [selectedField, setSelectedField] = useState('');
   const [value, setValue] = useState(null);
   const selectedOption = FIELD_OPTIONS.find((opt) => opt.value === selectedField);
   const hasFieldSelected = selectedField !== '';
-  const selectOptions = FIELD_OPTIONS;
+  const selectOptions = [EMPTY_OPTION, ...FIELD_OPTIONS];
 
   const fieldType = selectedOption?.type ?? 'text';
   const fieldOptions = selectedOption?.options ?? [];

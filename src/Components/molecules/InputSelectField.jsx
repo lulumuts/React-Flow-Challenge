@@ -76,7 +76,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
             borderRadius: '6px',
             '& .MuiSelect-select': { fontSize: '0.8rem', display: 'flex', alignItems: 'center' },
             '& fieldset': { borderRadius: '12px' },
-            '& .MuiOutlinedInput-root': { height: 40 },
+            '& .MuiOutlinedInput-root': { height: 48 },
             '& .MuiSelect-icon': { fontSize: 20 }
           }}
           MenuProps={{
