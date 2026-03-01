@@ -5,15 +5,15 @@ import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention';
 import { filterExpressions } from '../../lib/expressionSuggestions';
 import ExpressionSuggestionList from './ExpressionSuggestionList';
+import { AtButton } from '../atoms';
 import CloseIcon from '@mui/icons-material/Close';
-import atSignSvg from '../../assets/AtSign.svg';
 
 export default function TiptapValueField({ label = 'Value', editable = true, embedded = false }) {
   const [suggestionProps, setSuggestionProps] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [savedOutput, setSavedOutput] = useState(null);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
-  const [isAtButtonHovered, setIsAtButtonHovered] = useState(false);
+  const [isClearButtonHovered, setIsClearButtonHovered] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const suggestionPropsRef = useRef(null);
   const selectedIndexRef = useRef(0);
@@ -224,8 +224,8 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
                 editor?.commands.focus();
               }}
               onMouseDown={(e) => e.stopPropagation()}
-              onMouseEnter={() => setIsAtButtonHovered(true)}
-              onMouseLeave={() => setIsAtButtonHovered(false)}
+              onMouseEnter={() => setIsClearButtonHovered(true)}
+              onMouseLeave={() => setIsClearButtonHovered(false)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -234,7 +234,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
                 height: 28,
                 flexShrink: 0,
                 borderRadius: '50%',
-                backgroundColor: isAtButtonHovered ? 'rgba(131, 80, 203, 0.12)' : 'transparent',
+                backgroundColor: isClearButtonHovered ? 'rgba(131, 80, 203, 0.12)' : 'transparent',
                 border: 'none',
                 color: 'rgba(0, 0, 0, 0.6)',
                 cursor: 'pointer',
@@ -250,41 +250,14 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
               <CloseIcon sx={{ fontSize: 16, pointerEvents: 'none' }} />
             </button>
           ) : (
-            <button
-              type="button"
+            <AtButton
               className="nodrag"
-              tabIndex={-1}
               onClick={(e) => {
                 e.stopPropagation();
                 e.preventDefault();
                 handleAtButtonClick(e);
               }}
-              onMouseDown={(e) => e.stopPropagation()}
-              onMouseEnter={() => setIsAtButtonHovered(true)}
-              onMouseLeave={() => setIsAtButtonHovered(false)}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 28,
-                height: 28,
-                flexShrink: 0,
-                borderRadius: '50%',
-                backgroundColor: isAtButtonHovered ? 'rgba(131, 80, 203, 0.12)' : 'transparent',
-                border: 'none',
-                color: 'rgba(0, 0, 0, 0.6)',
-                cursor: 'pointer',
-                padding: 0,
-                pointerEvents: 'auto',
-                appearance: 'none',
-                position: 'relative',
-                zIndex: 10,
-                outline: 'none'
-              }}
-              title="Insert expression (@)"
-            >
-              <img src={atSignSvg} alt="" style={{ width: 14, height: 14, pointerEvents: 'none' }} />
-            </button>
+            />
           )}
         </div>
       )}

@@ -70,6 +70,11 @@ button:focus-visible {
   min-height: 48px !important;
 }
 
+/* @ button hover state */
+.at-button:hover {
+  background-color: rgba(131, 80, 203, 0.12) !important;
+}
+
 /* Value field - remove border from inner buttons (chevron, clear, etc.) */
 .value-field button {
   border: none;

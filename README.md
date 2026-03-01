@@ -4,6 +4,22 @@ A React Flow application with custom nodes for updating profile fields. Built wi
 
 ![Update Profile Field Node](docs-screenshot.png)
 
+## Architecture
+
+### Atomic design component structure
+The UI is built using **atomic design**, with components organized as atoms → molecules → organisms:
+
+- **Atoms** – Small, reusable primitives (e.g. `AtButton`, `ChevronButton`, `ClearButton`, `FieldTypeIcon`, `ProfileHeaderIcons`)
+- **Molecules** – Combinations of atoms (e.g. `InputSelectField`, `TiptapValueField`, `ExpressionSuggestionList`)
+- **Organisms** – Full sections or nodes (e.g. `Card`, `CustomEdge`)
+
+This structure promotes reusability and keeps components focused and testable.
+
+### React Flow add-node functionality
+A custom **add (+) button** is integrated into each card node. Clicking it creates a new node below the current one and connects them with an edge. Nodes can be chained to build flows.
+
+![React Flow add-node example](docs-add-node.png)
+
 ## Features
 
 ### Basic React Flow configuration
@@ -51,14 +67,21 @@ A React Flow application with custom nodes for updating profile fields. Built wi
 ```
 src/
 ├── Components/
-│   ├── molecules/
+│   ├── atoms/                             # Atomic design – reusable primitives
+│   │   ├── AtButton.jsx                   # @ expression button
+│   │   ├── ChevronButton.jsx
+│   │   ├── ClearButton.jsx
+│   │   ├── FieldTypeIcons.jsx
+│   │   └── ProfileHeaderIcons.jsx
+│   ├── molecules/                         # Atomic design – composed components
 │   │   ├── ExpressionSuggestionList.jsx  # Expression @ suggestions UI
 │   │   ├── InputSelectField.jsx          # Field dropdown
 │   │   ├── TiptapValueField.jsx          # Value editor (TipTap + expressions)
 │   │   ├── ValueFieldWithPicker.jsx      # Value field with Date/Boolean/Enum pickers
 │   │   └── ...
-│   └── organisms/
-│       └── Card.jsx                       # Custom node component
+│   └── organisms/                         # Atomic design – full sections
+│       ├── Card.jsx                       # Custom node component
+│       └── CustomEdge.jsx
 ├── lib/
 │   ├── expressionSuggestions.js          # Mock expression data
 │   ├── languageOptions.js                # ISO 639-3 language options
