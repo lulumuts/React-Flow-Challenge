@@ -22,7 +22,8 @@ const initialNodes = [
     type: 'cardForm',
     position: { x: 0, y: 0 },
     data: { label: 'Node 1' },
-    deletable: false
+    deletable: false,
+    dragHandle: '.card-drag-handle'
   },
   { id: 'n2',
     position: { x: 0, y: 200 },

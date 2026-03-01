@@ -64,10 +64,30 @@ button:focus-visible {
   font-weight: 500;
 }
 
-/* TipTap value field - ensure editor fills width */
+/* Value field - remove border from inner buttons (chevron, clear, etc.) */
+.value-field button {
+  border: none;
+}
+
+/* TipTap value field - scrollable container for long content */
+.tiptap-value-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+.tiptap-value-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+.tiptap-value-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+/* TipTap value field - ensure editor wrapper can grow for scroll */
 .tiptap-value-content {
-  width: 100%;
-  min-width: 0;
+  display: inline-block;
+  min-width: 100%;
+  width: max-content;
 }
 .tiptap-value-content .ProseMirror {
   box-sizing: border-box;
@@ -77,10 +97,11 @@ button:focus-visible {
 .ProseMirror {
   min-height: 24px;
   min-width: 80px;
-  width: 100%;
+  box-sizing: border-box;
   padding: 8px 12px;
   font-size: 0.8rem;
   outline: none;
+  white-space: nowrap;
 }
 .ProseMirror p {
   margin: 0 0 0.5em 0;

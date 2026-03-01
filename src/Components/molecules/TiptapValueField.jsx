@@ -5,6 +5,7 @@ import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention';
 import { filterExpressions } from '../../lib/expressionSuggestions';
 import ExpressionSuggestionList from './ExpressionSuggestionList';
+import CloseIcon from '@mui/icons-material/Close';
 import atSignSvg from '../../assets/AtSign.svg';
 
 export default function TiptapValueField({ label = 'Value', editable = true, embedded = false }) {
@@ -12,6 +13,8 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [savedOutput, setSavedOutput] = useState(null);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [isAtButtonHovered, setIsAtButtonHovered] = useState(false);
+  const [hasValue, setHasValue] = useState(false);
   const suggestionPropsRef = useRef(null);
   const selectedIndexRef = useRef(0);
   const filteredItemsRef = useRef(null);
@@ -43,6 +46,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         suggestion: {
           char: '@',
           allowSpaces: true,
+          allowedPrefixes: null,
           items: ({ query }) => filterExpressions(query),
           render: () => ({
             onStart: (props) => {
@@ -104,12 +108,67 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
     }
   }, [editor, editable]);
 
+  useEffect(() => {
+    if (!editor) return;
+    const checkHasValue = () => {
+      let hasMention = false;
+      editor.state.doc.descendants((node) => {
+        if (node.type.name === 'mention') {
+          hasMention = true;
+          return false;
+        }
+      });
+      setHasValue(hasMention);
+    };
+    editor.on('update', checkHasValue);
+    checkHasValue();
+    return () => editor.off('update', checkHasValue);
+  }, [editor]);
+
   const handleSubmit = () => {
     if (editor) {
       const text = editor.getText();
       setSavedOutput(text);
       editor.commands.clearContent();
     }
+  };
+
+  const handleAtButtonClick = (e) => {
+    e.preventDefault();
+    if (!editor || !editable) return;
+
+    editor.commands.focus();
+
+    requestAnimationFrame(() => {
+      const from = editor.state.selection.from;
+      editor.chain().insertContentAt(from, '@').run();
+
+      const range = { from, to: from + 1 };
+      const items = filterExpressions('');
+      const coords = editor.view.coordsAtPos(range.to);
+
+      setSuggestionProps({
+        editor,
+        range,
+        query: '',
+        text: '@',
+        items,
+        command: (item) => {
+          editor
+            .chain()
+            .focus()
+            .insertContentAt(range, [
+              { type: 'mention', attrs: { ...item, mentionSuggestionChar: '@' } },
+              { type: 'text', text: ' ' }
+            ])
+            .run();
+          setSuggestionProps(null);
+        },
+        clientRect: () =>
+          new DOMRect(coords.left, coords.top, coords.right - coords.left, coords.bottom - coords.top)
+      });
+      setSelectedIndex(0);
+    });
   };
 
   const editorWrapper = (
@@ -129,27 +188,104 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         overflow: 'hidden'
       }}
     >
-      <div style={{ flex: 1, minWidth: 0, width: '100%' }}>
+      <div
+        className="tiptap-value-scroll"
+        style={{
+          flex: 1,
+          minWidth: 0,
+          position: 'relative',
+          zIndex: 1
+        }}
+      >
         <EditorContent editor={editor} />
       </div>
       {!embedded && (
-        <span
+        <div
+          className="nodrag"
           style={{
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 10,
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            width: 28,
-            height: 28,
-            marginRight: 4,
-            flexShrink: 0,
-            borderRadius: '50%',
-            backgroundColor: 'transparent',
-            color: 'rgba(0, 0, 0, 0.5)'
+            marginRight: 4
           }}
-          title="Type @ to insert expression"
         >
-          <img src={atSignSvg} alt="" style={{ width: 14, height: 14 }} />
-        </span>
+          {hasValue ? (
+            <button
+              type="button"
+              className="nodrag"
+              tabIndex={-1}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                editor?.commands.clearContent();
+                editor?.commands.focus();
+              }}
+              onMouseDown={(e) => e.stopPropagation()}
+              onMouseEnter={() => setIsAtButtonHovered(true)}
+              onMouseLeave={() => setIsAtButtonHovered(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 28,
+                height: 28,
+                flexShrink: 0,
+                borderRadius: '50%',
+                backgroundColor: isAtButtonHovered ? 'rgba(131, 80, 203, 0.12)' : 'transparent',
+                border: 'none',
+                color: 'rgba(0, 0, 0, 0.6)',
+                cursor: 'pointer',
+                padding: 0,
+                pointerEvents: 'auto',
+                appearance: 'none',
+                position: 'relative',
+                zIndex: 10,
+                outline: 'none'
+              }}
+              title="Clear value"
+            >
+              <CloseIcon sx={{ fontSize: 16, pointerEvents: 'none' }} />
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="nodrag"
+              tabIndex={-1}
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                handleAtButtonClick(e);
+              }}
+              onMouseDown={(e) => e.stopPropagation()}
+              onMouseEnter={() => setIsAtButtonHovered(true)}
+              onMouseLeave={() => setIsAtButtonHovered(false)}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: 28,
+                height: 28,
+                flexShrink: 0,
+                borderRadius: '50%',
+                backgroundColor: isAtButtonHovered ? 'rgba(131, 80, 203, 0.12)' : 'transparent',
+                border: 'none',
+                color: 'rgba(0, 0, 0, 0.6)',
+                cursor: 'pointer',
+                padding: 0,
+                pointerEvents: 'auto',
+                appearance: 'none',
+                position: 'relative',
+                zIndex: 10,
+                outline: 'none'
+              }}
+              title="Insert expression (@)"
+            >
+              <img src={atSignSvg} alt="" style={{ width: 14, height: 14, pointerEvents: 'none' }} />
+            </button>
+          )}
+        </div>
       )}
     </div>
   );
@@ -176,7 +312,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
   return (
     <div
       style={{
-        width: 248,
+        width: 360,
         padding: '8px 8px',
         display: 'flex',
         flexDirection: 'column',
@@ -190,6 +326,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         </label>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
           {editorWrapper}
+          {hasValue && (
           <button
             type="button"
             onClick={handleSubmit}
@@ -213,6 +350,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
           >
             Submit
           </button>
+          )}
         </div>
       </div>
       {savedOutput != null && savedOutput !== '' && (

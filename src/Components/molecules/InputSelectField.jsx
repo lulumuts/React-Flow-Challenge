@@ -15,7 +15,7 @@ const FieldIcon = ({ icon }) => {
   if (!icon) return null;
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.6)', flexShrink: 0 }}>
-      <FieldTypeIcon icon={icon} size={14} />
+      <FieldTypeIcon icon={icon} size={18} />
     </span>
   );
 };
@@ -48,7 +48,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
   };
 
   return (
-    <div style={{ width: 248, padding: '6px 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
+    <div style={{ width: 360, padding: '6px 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
       <Handle type="target" position={Position.Top} />
 
       <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, opacity: 0.7 }}>Field</label>
@@ -89,7 +89,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
                 maxHeight: 280
               }
             },
-            MenuListProps: { dense: true, disablePadding: true }
+            MenuListProps: { disablePadding: true }
           }}
         >
           <ListSubheader
@@ -126,7 +126,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
               }}
               sx={{
                 width: '100%',
-                '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2 }
+                '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2, height: 48 }
               }}
             />
           </ListSubheader>
@@ -140,10 +140,11 @@ export default function InputSelectField({ data, value, onChange, options = [] }
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
-                  fontSize: '0.85rem',
+                  fontSize: '0.95rem',
                   borderRadius: 2,
                   mx: 1,
                   mb: 0.5,
+                  py: 1.75,
                   '&:hover': { backgroundColor: '#d7c0ff' },
                   '&.Mui-selected': {
                     backgroundColor: 'rgba(147, 112, 219, 0.2)',
@@ -153,7 +154,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
               >
                 <FieldIcon icon={opt.icon || opt.type} />
                 <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{opt.label}</span>
-                {isSelected && <CheckIcon sx={{ fontSize: 18, color: '#1a1a1a' }} />}
+                {isSelected && <CheckIcon sx={{ fontSize: 22, color: '#1a1a1a' }} />}
               </MenuItem>
             );
           })}

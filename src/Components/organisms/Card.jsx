@@ -39,7 +39,7 @@ export default function CardForm() {
   };
 
   return (
-    <div style={{ width: 296 }}>
+    <div style={{ width: 400 }}>
       <Handle type="target" position={Position.Top} />
 
       <Card
@@ -55,6 +55,7 @@ export default function CardForm() {
         }}
       >
         <div
+          className="card-drag-handle"
           style={{
             display: 'flex',
             alignItems: 'center',

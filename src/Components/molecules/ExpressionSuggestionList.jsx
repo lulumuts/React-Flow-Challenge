@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import CheckIcon from '@mui/icons-material/Check';
 import { FieldTypeIcon } from '../atoms';
 
 /**
@@ -17,6 +18,7 @@ export default function ExpressionSuggestionList({
 }) {
   const listRef = useRef(null);
   const [filter, setFilter] = useState('');
+  const [hoveredIndex, setHoveredIndex] = useState(null);
   const filterInputRef = useRef(null);
 
   const { items = [], command, clientRect } = suggestionProps || {};
@@ -67,8 +69,8 @@ export default function ExpressionSuggestionList({
   const style = rect
     ? {
         position: 'fixed',
-        top: rect.bottom + 4,
-        left: rect.left,
+        top: rect.bottom + 24,
+        left: rect.left - 24,
         zIndex: 9999
       }
     : {};
@@ -85,17 +87,17 @@ export default function ExpressionSuggestionList({
         ...style,
         background: '#fff',
         color: '#1a1a1a',
-        border: '1px solid rgba(0,0,0,0.2)',
-        borderRadius: 8,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        borderRadius: 12,
+        boxShadow: '0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12)',
         maxHeight: 280,
-        minWidth: 200,
+        minWidth: 360,
+        width: 360,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden'
       }}
     >
-      <div style={{ flexShrink: 0, padding: 8, borderBottom: '1px solid rgba(0,0,0,0.08)' }}>
+      <div style={{ flexShrink: 0, padding: '12px 8px 4px', lineHeight: 0 }}>
         <TextField
           inputRef={filterInputRef}
           size="small"
@@ -125,7 +127,7 @@ export default function ExpressionSuggestionList({
           }}
           sx={{
             width: '100%',
-            '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2 }
+            '& .MuiOutlinedInput-root': { fontSize: '0.75rem', borderRadius: 2, height: 48 }
           }}
         />
       </div>
@@ -134,42 +136,55 @@ export default function ExpressionSuggestionList({
         style={{
           overflowY: 'auto',
           flex: 1,
-          padding: 4
+          padding: '0 4px 4px'
         }}
       >
         {filteredItems.length === 0 ? (
-          <div style={{ padding: '12px', fontSize: '0.8rem', color: 'rgba(0,0,0,0.5)' }}>
+          <div style={{ padding: '12px', fontSize: '0.75rem', color: 'rgba(0,0,0,0.5)' }}>
             No matches
           </div>
         ) : (
-          filteredItems.map((item, index) => (
+          filteredItems.map((item, index) => {
+            const isHovered = hoveredIndex === index;
+            const isSelected = index === selectedIndex;
+            const backgroundColor = isHovered ? '#d7c0ff' : isSelected ? 'rgba(147, 112, 219, 0.2)' : 'transparent';
+            return (
             <div
               key={item.id || item.label}
               data-index={index}
               role="option"
-              aria-selected={index === selectedIndex}
+              aria-selected={isSelected}
               onClick={() => handleSelect(item)}
-              onMouseEnter={() => setSelectedIndex(index)}
+              onMouseEnter={() => {
+                setSelectedIndex(index);
+                setHoveredIndex(index);
+              }}
+              onMouseLeave={() => setHoveredIndex(null)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 8,
-                padding: '8px 12px',
+                padding: '14px 12px',
                 fontSize: '0.8rem',
                 cursor: 'pointer',
-                borderRadius: 4,
-                color: index === selectedIndex ? '#0d47a1' : '#1a1a1a',
-                backgroundColor: index === selectedIndex ? 'rgba(25, 118, 210, 0.15)' : 'transparent'
+                borderRadius: 8,
+                margin: '0 8px 4px 8px',
+                color: '#1a1a1a',
+                backgroundColor
               }}
             >
               {item.type && (
-                <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center' }}>
-                  <FieldTypeIcon icon={item.type} size={14} />
+                <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', color: 'rgba(0, 0, 0, 0.6)' }}>
+                  <FieldTypeIcon icon={item.type} size={18} />
                 </span>
               )}
-              <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>
+              <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{item.label}</span>
+              <span style={{ width: 22, height: 22, flexShrink: 0, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                <CheckIcon sx={{ fontSize: 22, color: '#1a1a1a', opacity: isSelected ? 1 : 0 }} />
+              </span>
             </div>
-          ))
+            );
+          })
         )}
       </div>
     </div>
