@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { ChevronButton } from '../atoms';
 
 const OPTIONS = [
   { value: true, label: 'Yes' },
@@ -34,20 +33,7 @@ export default function BooleanPickerButton({ onSelect, containerRef }) {
 
   return (
     <>
-      <IconButton
-        size="small"
-        onClick={handleOpen}
-        aria-label="Open Yes/No picker"
-        disableFocusRipple
-        sx={{
-          p: 0.25,
-          ...(anchorEl && { backgroundColor: 'rgba(147, 112, 219, 0.2)' }),
-          '&.Mui-focusVisible': { outline: 'none', boxShadow: 'none' },
-          '&:focus': { outline: 'none' }
-        }}
-      >
-        <KeyboardArrowDownIcon sx={{ fontSize: 20 }} />
-      </IconButton>
+      <ChevronButton onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open Yes/No picker" />
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

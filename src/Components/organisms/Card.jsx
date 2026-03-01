@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import Card from '@mui/material/Card';
 import { Handle, Position } from '@xyflow/react';
-import InputSelectField from './InputSelectField';
-import ValueFieldWithPicker from './ValueFieldWithPicker';
-import { LANGUAGE_OPTIONS } from './languageOptions';
+import InputSelectField from '../molecules/InputSelectField';
+import ValueFieldWithPicker from '../molecules/ValueFieldWithPicker';
+import { LANGUAGE_OPTIONS } from '../../lib/languageOptions';
 
 const EMPTY_OPTION = { value: '', label: 'Select a field...' };
 

@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
+import { ClearButton } from '../atoms';
 import TiptapValueField from './TiptapValueField';
 import DatePickerButton from './DatePickerButton';
 import BooleanPickerButton from './BooleanPickerButton';
@@ -75,21 +74,7 @@ export default function ValueFieldWithPicker({
           <>
             <span style={{ flex: 1, fontSize: '0.8rem', color: '#333' }}>{displayValue}</span>
             <div style={{ marginLeft: 8, flexShrink: 0 }}>
-            <IconButton
-              size="small"
-              onClick={() => onValueChange?.(null)}
-              aria-label="Clear value"
-              disableFocusRipple
-              sx={{
-                p: 0.15,
-                minWidth: 24,
-                minHeight: 24,
-                '&.Mui-focusVisible': { outline: 'none', boxShadow: 'none' },
-                '&:focus': { outline: 'none' }
-              }}
-            >
-              <CloseIcon sx={{ fontSize: 14 }} />
-            </IconButton>
+            <ClearButton onClick={() => onValueChange?.(null)} />
             </div>
           </>
         ) : (

@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { ChevronButton } from '../atoms';
 
 /**
  * Compact options dropdown trigger (⬇️).
@@ -30,20 +29,7 @@ export default function EnumPickerButton({ options = [], onSelect, containerRef 
 
   return (
     <>
-      <IconButton
-        size="small"
-        onClick={handleOpen}
-        aria-label="Open options picker"
-        disableFocusRipple
-        sx={{
-          p: 0.25,
-          ...(anchorEl && { backgroundColor: 'rgba(147, 112, 219, 0.2)' }),
-          '&.Mui-focusVisible': { outline: 'none', boxShadow: 'none' },
-          '&:focus': { outline: 'none' }
-        }}
-      >
-        <KeyboardArrowDownIcon sx={{ fontSize: 20 }} />
-      </IconButton>
+      <ChevronButton onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open options picker" />
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}

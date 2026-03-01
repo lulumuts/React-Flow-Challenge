@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import IconButton from '@mui/material/IconButton';
 import Popover from '@mui/material/Popover';
 import TextField from '@mui/material/TextField';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { ChevronButton } from '../atoms';
 
 /**
  * Compact date picker trigger (⬇️). Opens date input on click.
@@ -32,20 +31,7 @@ export default function DatePickerButton({ onSelect, containerRef }) {
 
   return (
     <>
-      <IconButton
-        size="small"
-        onClick={handleOpen}
-        aria-label="Open date picker"
-        disableFocusRipple
-        sx={{
-          p: 0.25,
-          ...(anchorEl && { backgroundColor: 'rgba(147, 112, 219, 0.2)' }),
-          '&.Mui-focusVisible': { outline: 'none', boxShadow: 'none' },
-          '&:focus': { outline: 'none' }
-        }}
-      >
-        <KeyboardArrowDownIcon sx={{ fontSize: 20 }} />
-      </IconButton>
+      <ChevronButton onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open date picker" />
       <Popover
         open={Boolean(anchorEl)}
         anchorEl={anchorEl}

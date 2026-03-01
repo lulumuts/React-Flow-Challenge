@@ -9,8 +9,7 @@ import {
   addEdge 
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { CustomEdge } from './Components/CustomEdge';
-import  Card  from './Components/Card';
+import { Card, CustomEdge } from './Components';
 
 
 const edgeTypes = {

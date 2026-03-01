@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention';
-import { filterExpressions } from './expressionSuggestions';
+import { filterExpressions } from '../../lib/expressionSuggestions';
 import ExpressionSuggestionList from './ExpressionSuggestionList';
 
 export default function TiptapValueField({ label = 'Value', editable = true, embedded = false }) {
