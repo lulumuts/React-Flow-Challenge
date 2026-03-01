@@ -181,7 +181,8 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         alignItems: 'center',
         borderRadius: embedded ? 0 : 12,
         border: embedded ? 'none' : '1px solid rgba(0, 0, 0, 0.23)',
-        minHeight: 40,
+        height: embedded ? undefined : undefined,
+        minHeight: 48,
         backgroundColor: editable ? '#fff' : 'rgba(0, 0, 0, 0.04)',
         cursor: editable ? 'text' : 'not-allowed',
         padding: embedded ? 0 : undefined,
@@ -320,38 +321,44 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
       }}
       className="nodrag"
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
-        <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>
-          {label}
-        </label>
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {editorWrapper}
-          {hasValue && (
-          <button
-            type="button"
-            onClick={handleSubmit}
-            disabled={!editor}
-            onMouseEnter={() => setIsButtonHovered(true)}
-            onMouseLeave={() => setIsButtonHovered(false)}
-            style={{
-              width: '100%',
-              marginTop: 16,
-              padding: '10px 16px',
-              fontSize: '0.8rem',
-              fontWeight: 500,
-              color: isButtonHovered && editor ? '#fff' : '#8350cb',
-              backgroundColor: isButtonHovered && editor ? '#8350cb' : 'transparent',
-              border: '1px solid #8350cb',
-              borderRadius: 12,
-              cursor: editor ? 'pointer' : 'not-allowed',
-              opacity: editor ? 1 : 0.6,
-              boxSizing: 'border-box'
-            }}
-          >
-            Submit
-          </button>
-          )}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, opacity: 0.7 }}>
+            {label}
+          </label>
+          <div style={{ flex: 1, minWidth: 0 }}>{editorWrapper}</div>
         </div>
+        {hasValue && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 16 }}>
+            <span style={{ width: 40, flexShrink: 0 }} />
+            <button
+              type="button"
+              onClick={handleSubmit}
+              disabled={!editor}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
+              style={{
+                flex: 1,
+                height: 48,
+                padding: '0 16px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: '0.8rem',
+                fontWeight: 500,
+                color: isButtonHovered && editor ? '#fff' : '#8350cb',
+                backgroundColor: isButtonHovered && editor ? '#8350cb' : 'transparent',
+                border: '1px solid #8350cb',
+                borderRadius: 12,
+                cursor: editor ? 'pointer' : 'not-allowed',
+                opacity: editor ? 1 : 0.6,
+                boxSizing: 'border-box'
+              }}
+            >
+              Submit
+            </button>
+          </div>
+        )}
       </div>
       {savedOutput != null && savedOutput !== '' && (
         <div

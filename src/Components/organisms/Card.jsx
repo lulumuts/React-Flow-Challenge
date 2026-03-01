@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import IconButton from '@mui/material/IconButton';
 import Card from '@mui/material/Card';
+import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { UserIcon, InfoCircleIcon } from '../atoms/ProfileHeaderIcons';
-import { Handle, Position } from '@xyflow/react';
+import AddIcon from '@mui/icons-material/Add';
 import InputSelectField from '../molecules/InputSelectField';
 import ValueFieldWithPicker from '../molecules/ValueFieldWithPicker';
 import { fetchLanguageOptions } from '../../lib/languageOptions';
@@ -22,9 +23,38 @@ const FIELD_OPTIONS = [
   { value: 'my_super_crazy_very_extremely_private_field', label: 'my super crazy very extremely private field', type: 'text', icon: 'text' }
 ];
 
-export default function CardForm() {
+export default function CardForm({ id }) {
+  const { getNode, addNodes, addEdges } = useReactFlow();
   const [selectedField, setSelectedField] = useState('');
   const [value, setValue] = useState(null);
+
+  const handleAddNode = useCallback(() => {
+    const currentNode = getNode(id);
+    if (!currentNode) return;
+    const newNodeId = `n${Date.now()}`;
+    const offsetY = 280;
+    addNodes([
+      {
+        id: newNodeId,
+        type: 'cardForm',
+        position: { x: currentNode.position.x, y: currentNode.position.y + offsetY },
+        data: { label: `Node ${newNodeId}` },
+        deletable: true,
+        dragHandle: '.card-drag-handle'
+      }
+    ]);
+    addEdges([
+      {
+        id: `${id}-${newNodeId}`,
+        source: id,
+        sourceHandle: 'a',
+        target: newNodeId,
+        type: 'custom-edge',
+        label: 'connects with',
+        style: { stroke: '#8350cb', strokeWidth: 3 }
+      }
+    ]);
+  }, [id, getNode, addNodes, addEdges]);
   const selectedOption = FIELD_OPTIONS.find((opt) => opt.value === selectedField);
   const hasFieldSelected = selectedField !== '';
   const selectOptions = [EMPTY_OPTION, ...FIELD_OPTIONS];
@@ -41,10 +71,12 @@ export default function CardForm() {
   };
 
   return (
-    <div style={{ width: 400 }}>
-      <Handle type="target" position={Position.Top} />
+    <div style={{ display: 'flex', alignItems: 'center', gap: 0 }}>
+      <div style={{ width: 400, position: 'relative' }}>
+        <Handle type="target" position={Position.Left} />
+        <Handle type="source" position={Position.Left} id="a" />
 
-      <Card
+        <Card
         sx={{
           p: 0,
           overflow: 'hidden',
@@ -63,9 +95,10 @@ export default function CardForm() {
             alignItems: 'center',
             gap: 6,
             width: '100%',
-            minHeight: 36,
+            height: 56,
+            minHeight: 56,
             boxSizing: 'border-box',
-            padding: 8,
+            padding: '8px 16px',
             backgroundColor: 'rgba(0, 0, 0, 0.04)',
             borderRadius: '16px 16px 0 0'
           }}
@@ -75,16 +108,16 @@ export default function CardForm() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              width: 28,
-              height: 28,
+              width: 24,
+              height: 24,
               backgroundColor: '#F4B3FF',
               borderRadius: 6,
               color: 'rgba(0, 0, 0, 0.6)'
             }}
           >
-            <UserIcon size={18} />
+            <UserIcon size={16} />
           </span>
-          <h6 style={{ margin: 0, flex: 1, fontSize: '0.8rem', fontWeight: 400 }}>Update Profile Field</h6>
+          <h6 style={{ margin: 0, flex: 1, fontSize: '0.85rem', fontWeight: 400, color: 'rgba(0, 0, 0, 0.55)' }}>Update Profile Field</h6>
           <IconButton
             size="small"
             aria-label="More info"
@@ -119,9 +152,29 @@ export default function CardForm() {
             disabled={!hasFieldSelected}
           />
         </div>
-      </Card>
+        </Card>
+      </div>
 
-      <Handle type="source" position={Position.Bottom} id="a" />
+      <IconButton
+        className="nodrag"
+        onClick={handleAddNode}
+        aria-label="Add node"
+        size="small"
+        sx={{
+          ml: 0.5,
+          width: 28,
+          height: 28,
+          color: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor: 'rgba(131, 80, 203, 0.12)',
+          '&:hover': {
+            backgroundColor: 'rgba(131, 80, 203, 0.24)',
+            color: 'rgba(0, 0, 0, 0.87)'
+          },
+          '&.Mui-focusVisible': { outline: 'none', boxShadow: 'none' }
+        }}
+      >
+        <AddIcon sx={{ fontSize: 18 }} />
+      </IconButton>
     </div>
   );
 }

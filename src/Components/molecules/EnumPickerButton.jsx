@@ -124,7 +124,7 @@ export default function EnumPickerButton({ options = [], optionsLoader, onOption
             }}
             sx={{
               width: '100%',
-              '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2 }
+              '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2, height: 48 }
             }}
           />
         </Box>

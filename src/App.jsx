@@ -17,41 +17,16 @@ const edgeTypes = {
 }
 
 const initialNodes = [
-  { 
+  {
     id: 'n1',
     type: 'cardForm',
     position: { x: 0, y: 0 },
     data: { label: 'Node 1' },
     deletable: false,
     dragHandle: '.card-drag-handle'
-  },
-  { id: 'n2',
-    position: { x: 0, y: 200 },
-    data: { label: 'Node 2' } 
-  },
-  { id: 'n3',
-    position: { x: 0, y: 300 },
-    data: { label: 'Node 3' } 
-  },
-];
-const initialEdges = [
-  { 
-    id: 'n1-n2',
-    source: 'n1',
-    sourceHandle: 'a',
-    target: 'n2',
-    type: 'custom-edge',
-    label:'connects with',
-
-  },
-    { 
-    id: 'n2-n3',
-    source: 'n2',
-    target: 'n3',
-    type: 'step',
-    label:'connects with'
   }
 ];
+const initialEdges = [];
  
 export default function App() {
   const [nodes, setNodes] = useState(initialNodes);

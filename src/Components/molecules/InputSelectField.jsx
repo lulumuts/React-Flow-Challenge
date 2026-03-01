@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Handle, Position } from '@xyflow/react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -49,10 +48,8 @@ export default function InputSelectField({ data, value, onChange, options = [] }
 
   return (
     <div style={{ width: 360, padding: '6px 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
-      <Handle type="target" position={Position.Top} />
-
       <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, opacity: 0.7 }}>Field</label>
-      <FormControl ref={anchorRef} size="small" sx={{ flex: 1, minWidth: 0 }}>
+        <FormControl ref={anchorRef} size="small" className="field-select-form-control" sx={{ flex: 1, minWidth: 0 }}>
         <Select
           onOpen={handleOpen}
           fullWidth
@@ -74,6 +71,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
           sx={{
             flex: 1,
             borderRadius: '6px',
+            height: 48,
             '& .MuiSelect-select': { fontSize: '0.8rem', display: 'flex', alignItems: 'center' },
             '& fieldset': { borderRadius: '12px' },
             '& .MuiOutlinedInput-root': { height: 48 },
@@ -126,7 +124,7 @@ export default function InputSelectField({ data, value, onChange, options = [] }
               }}
               sx={{
                 width: '100%',
-                '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2, height: 48 }
+                '& .MuiOutlinedInput-root': { fontSize: '0.8rem', borderRadius: 2, height: 56 }
               }}
             />
           </ListSubheader>
@@ -160,8 +158,6 @@ export default function InputSelectField({ data, value, onChange, options = [] }
           })}
         </Select>
       </FormControl>
-
-      <Handle type="source" position={Position.Bottom} id="a" />
     </div>
   );
 }

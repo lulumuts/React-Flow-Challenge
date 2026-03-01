@@ -68,24 +68,18 @@ export default function ValueFieldWithPicker({
       }}
       className="nodrag"
     >
-      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
-        <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>{label}</label>
-        <div
-          style={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 6
-          }}
-        >
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+          <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, opacity: 0.7 }}>{label}</label>
           <div
             ref={valueContainerRef}
             className="value-field"
             style={{
+              flex: 1,
               display: 'flex',
               alignItems: 'center',
               gap: 4,
-              minHeight: 40,
+              minHeight: 48,
               borderRadius: 12,
               border: '1px solid rgba(0, 0, 0, 0.23)',
               backgroundColor: hasPickerValue ? 'rgba(0, 0, 0, 0.04)' : disabled ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
@@ -102,7 +96,7 @@ export default function ValueFieldWithPicker({
               </>
             ) : (
               <>
-                <div style={{ flex: 1, minWidth: 100, display: 'flex' }}>
+                <div style={{ flex: 1, minWidth: 0, minHeight: 48, display: 'flex' }}>
                   <TiptapValueField embedded editable={editable} />
                 </div>
                 <div style={{ marginLeft: 8, flexShrink: 0 }}>
@@ -128,30 +122,36 @@ export default function ValueFieldWithPicker({
               </>
             )}
           </div>
-          {showSubmitForPicker && (
+        </div>
+        {showSubmitForPicker && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 16 }}>
+            <span style={{ width: 40, flexShrink: 0 }} />
             <button
               type="button"
               onClick={handlePickerSubmit}
               onMouseEnter={() => setIsButtonHovered(true)}
               onMouseLeave={() => setIsButtonHovered(false)}
               style={{
-                width: '100%',
-                marginTop: 16,
-                padding: '10px 16px',
-                fontSize: '0.8rem',
-                fontWeight: 500,
-                color: isButtonHovered ? '#fff' : '#8350cb',
-                backgroundColor: isButtonHovered ? '#8350cb' : 'transparent',
-                border: '1px solid #8350cb',
-                borderRadius: 12,
-                cursor: 'pointer',
-                boxSizing: 'border-box'
-              }}
-            >
-              Submit
-            </button>
-          )}
-        </div>
+                flex: 1,
+                height: 48,
+                padding: '0 16px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '0.8rem',
+              fontWeight: 500,
+              color: isButtonHovered ? '#fff' : '#8350cb',
+              backgroundColor: isButtonHovered ? '#8350cb' : 'transparent',
+              border: '1px solid #8350cb',
+              borderRadius: 12,
+              cursor: 'pointer',
+              boxSizing: 'border-box'
+            }}
+          >
+            Submit
+          </button>
+          </div>
+        )}
       </div>
       {savedOutput != null && savedOutput !== '' && (
         <div

@@ -64,30 +64,35 @@ button:focus-visible {
   font-weight: 500;
 }
 
+/* Field select input - force height (overrides MUI small/dense) */
+.field-select-form-control .MuiOutlinedInput-root {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+
 /* Value field - remove border from inner buttons (chevron, clear, etc.) */
 .value-field button {
   border: none;
 }
 
-/* TipTap value field - scrollable container for long content */
+/* TipTap value field - wrap content, scroll vertically when needed */
 .tiptap-value-scroll {
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
 .tiptap-value-scroll::-webkit-scrollbar {
-  height: 6px;
+  width: 6px;
 }
 .tiptap-value-scroll::-webkit-scrollbar-thumb {
   background: rgba(0, 0, 0, 0.2);
   border-radius: 3px;
 }
 
-/* TipTap value field - ensure editor wrapper can grow for scroll */
+/* TipTap value field - fixed width, allow wrapping */
 .tiptap-value-content {
-  display: inline-block;
-  min-width: 100%;
-  width: max-content;
+  width: 100%;
+  overflow-wrap: break-word;
 }
 .tiptap-value-content .ProseMirror {
   box-sizing: border-box;
@@ -95,13 +100,15 @@ button:focus-visible {
 
 /* TipTap / ProseMirror editor styles */
 .ProseMirror {
-  min-height: 24px;
+  min-height: 32px;
   min-width: 80px;
+  max-width: 100%;
   box-sizing: border-box;
   padding: 8px 12px;
   font-size: 0.8rem;
   outline: none;
-  white-space: nowrap;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 .ProseMirror p {
   margin: 0 0 0.5em 0;
