@@ -27,7 +27,16 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
           class: 'expression-mention'
         },
         renderText({ node }) {
-          return `@${node.attrs.label ?? node.attrs.id}`;
+          return `@${node.attrs.id ?? node.attrs.label}`;
+        },
+        renderHTML({ node, suggestion, options }) {
+          const char = suggestion?.char ?? '@';
+          const text = node.attrs.id ?? node.attrs.label ?? '';
+          return [
+            'span',
+            options.HTMLAttributes ?? {},
+            `${char}${text}`
+          ];
         },
         suggestion: {
           char: '@',
@@ -175,6 +184,7 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
             suggestionProps={suggestionProps}
             selectedIndex={selectedIndex}
             setSelectedIndex={setSelectedIndex}
+            filteredItemsRef={filteredItemsRef}
             onClose={() => setSuggestionProps(null)}
           />,
           document.body
