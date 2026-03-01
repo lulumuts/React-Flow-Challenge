@@ -54,9 +54,30 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Expression mention highlighting (Turn.io @expression) */
+.ProseMirror [data-type="mention"],
+.ProseMirror .expression-mention {
+  background: rgba(25, 118, 210, 0.12);
+  color: #1565c0;
+  padding: 0 2px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* TipTap value field - ensure editor fills width */
+.tiptap-value-content {
+  width: 100%;
+  min-width: 0;
+}
+.tiptap-value-content .ProseMirror {
+  box-sizing: border-box;
+}
+
 /* TipTap / ProseMirror editor styles */
 .ProseMirror {
   min-height: 24px;
+  min-width: 80px;
+  width: 100%;
   padding: 8px 12px;
   font-size: 0.8rem;
   outline: none;

@@ -3,6 +3,7 @@ import { Handle, Position } from '@xyflow/react';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import PlaceIcon from '@mui/icons-material/Place';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -36,15 +37,17 @@ export default function InputSelectField({ data, value, onChange, options = [] }
   };
 
   return (
-    <div style={{ width: 232, padding: 8 }}>
+    <div style={{ width: 248, padding: '8px 8px', display: 'flex', alignItems: 'center', gap: 4 }}>
       <Handle type="target" position={Position.Top} />
 
-      <FormControl fullWidth size="small" sx={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
-        <label style={{ fontSize: '0.8rem', minWidth: 48, flexShrink: 0 }}>Field</label>
+      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0 }}>Field</label>
+      <FormControl size="small" sx={{ flex: 1, minWidth: 0 }}>
         <Select
+          fullWidth
           value={currentValue}
           displayEmpty
           variant="outlined"
+          IconComponent={KeyboardArrowDownIcon}
           onChange={handleChange}
           renderValue={(selected) => {
             const opt = options.find((o) => o.value === selected);
@@ -58,16 +61,18 @@ export default function InputSelectField({ data, value, onChange, options = [] }
           }}
           sx={{
             flex: 1,
-            borderRadius: '12px',
+            borderRadius: '6px',
             '& .MuiSelect-select': { fontSize: '0.8rem' },
             '& fieldset': { borderRadius: '12px' },
-            '& .MuiOutlinedInput-root': { height: 40 }
+            '& .MuiOutlinedInput-root': { height: 40 },
+            '& .MuiSelect-icon': { fontSize: 20 }
           }}
           MenuProps={{
             PaperProps: {
               sx: {
                 width: 300,
-                left: 32
+                left: 32,
+                borderRadius: 6
               }
             }
           }}
