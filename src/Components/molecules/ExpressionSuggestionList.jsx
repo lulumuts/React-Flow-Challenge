@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
+import { FieldTypeIcon } from '../atoms';
 
 /**
  * Floating suggestion list for Turn.io expressions.
@@ -26,7 +27,8 @@ export default function ExpressionSuggestionList({
     return items.filter(
       (item) =>
         (item.label || '').toLowerCase().includes(q) ||
-        (item.id || '').toLowerCase().includes(q)
+        (item.id || '').toLowerCase().includes(q) ||
+        (item.displayLabel || '').toLowerCase().includes(q)
     );
   }, [items, filter]);
 
@@ -97,7 +99,7 @@ export default function ExpressionSuggestionList({
         <TextField
           inputRef={filterInputRef}
           size="small"
-          placeholder="Filter"
+          placeholder={items.some((i) => i.category === 'contact') ? 'Search contact properties...' : 'Search expressions...'}
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           onKeyDown={(e) => {
@@ -149,6 +151,9 @@ export default function ExpressionSuggestionList({
               onClick={() => handleSelect(item)}
               onMouseEnter={() => setSelectedIndex(index)}
               style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
                 padding: '8px 12px',
                 fontSize: '0.8rem',
                 cursor: 'pointer',
@@ -157,7 +162,12 @@ export default function ExpressionSuggestionList({
                 backgroundColor: index === selectedIndex ? 'rgba(25, 118, 210, 0.15)' : 'transparent'
               }}
             >
-              {item.label}
+              {item.type && (
+                <span style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center' }}>
+                  <FieldTypeIcon icon={item.type} size={14} />
+                </span>
+              )}
+              <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>
             </div>
           ))
         )}

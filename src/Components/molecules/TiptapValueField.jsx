@@ -10,6 +10,8 @@ import atSignSvg from '../../assets/AtSign.svg';
 export default function TiptapValueField({ label = 'Value', editable = true, embedded = false }) {
   const [suggestionProps, setSuggestionProps] = useState(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [savedOutput, setSavedOutput] = useState(null);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const suggestionPropsRef = useRef(null);
   const selectedIndexRef = useRef(0);
   const filteredItemsRef = useRef(null);
@@ -102,6 +104,14 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
     }
   }, [editor, editable]);
 
+  const handleSubmit = () => {
+    if (editor) {
+      const text = editor.getText();
+      setSavedOutput(text);
+      editor.commands.clearContent();
+    }
+  };
+
   const editorWrapper = (
     <div
       style={{
@@ -169,15 +179,58 @@ export default function TiptapValueField({ label = 'Value', editable = true, emb
         width: 248,
         padding: '8px 8px',
         display: 'flex',
-        alignItems: 'flex-start',
-        gap: 4
+        flexDirection: 'column',
+        gap: 8
       }}
       className="nodrag"
     >
-      <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>
-        {label}
-      </label>
-      {editorWrapper}
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
+        <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, paddingTop: 8, opacity: 0.7 }}>
+          {label}
+        </label>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {editorWrapper}
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={!editor}
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
+            style={{
+              width: '100%',
+              marginTop: 16,
+              padding: '10px 16px',
+              fontSize: '0.8rem',
+              fontWeight: 500,
+              color: isButtonHovered && editor ? '#fff' : '#8350cb',
+              backgroundColor: isButtonHovered && editor ? '#8350cb' : 'transparent',
+              border: '1px solid #8350cb',
+              borderRadius: 12,
+              cursor: editor ? 'pointer' : 'not-allowed',
+              opacity: editor ? 1 : 0.6,
+              boxSizing: 'border-box'
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+      {savedOutput != null && savedOutput !== '' && (
+        <div
+          style={{
+            padding: 10,
+            fontSize: '0.8rem',
+            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            borderRadius: 8,
+            color: '#333',
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-word'
+          }}
+        >
+          <div style={{ fontSize: '0.7rem', opacity: 0.7, marginBottom: 4 }}>Output</div>
+          {savedOutput}
+        </div>
+      )}
       {suggestionProps &&
         createPortal(
           <ExpressionSuggestionList

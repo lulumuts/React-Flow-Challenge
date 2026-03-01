@@ -1,25 +1,29 @@
 /**
  * Turn.io expression suggestions for @mention-style autocomplete.
- * @see https://whatsapp.turn.io/docs/journeys/expressions_reference
+ * Models contact as an object with properties; supports object-aware search.
+ * @see https://whatsapp.turn.io/docs/journeys/expressions
+ * @see https://whatsapp.turn.io/docs/api/contacts
  */
 
-const EXPRESSION_SUGGESTIONS = [
-  // Contact fields
-  { id: 'contact.name', label: 'contact.name', category: 'contact' },
-  { id: 'contact.email', label: 'contact.email', category: 'contact' },
-  { id: 'contact.first_name', label: 'contact.first_name', category: 'contact' },
-  { id: 'contact.last_name', label: 'contact.last_name', category: 'contact' },
-  { id: 'contact.surname', label: 'contact.surname', category: 'contact' },
-  { id: 'contact.phone', label: 'contact.phone', category: 'contact' },
-  { id: 'contact.language', label: 'contact.language', category: 'contact' },
-  { id: 'contact.groups', label: 'contact.groups', category: 'contact' },
-  { id: 'contact.balance', label: 'contact.balance', category: 'contact' },
-  { id: 'contact.gender', label: 'contact.gender', category: 'contact' },
-  { id: 'contact.age', label: 'contact.age', category: 'contact' },
-  { id: 'contact.location', label: 'contact.location', category: 'contact' },
-  { id: 'contact.opted_in', label: 'contact.opted_in', category: 'contact' },
-  { id: 'contact.birthday', label: 'contact.birthday', category: 'contact' },
-  { id: 'contact.is_blocked', label: 'contact.is_blocked', category: 'contact' },
+import { CONTACT_PROPERTIES } from './turnioExpressionSchema';
+
+function toContactSuggestions(filterBy = '') {
+  const q = filterBy.toLowerCase().trim();
+  return CONTACT_PROPERTIES.filter(
+    (p) =>
+      !q ||
+      p.display.toLowerCase().includes(q) ||
+      p.name.toLowerCase().includes(q)
+  ).map((p) => ({
+    id: `contact.${p.name}`,
+    label: `Contact > ${p.display}`,
+    displayLabel: p.display,
+    type: p.type,
+    category: 'contact'
+  }));
+}
+
+const FUNCTION_SUGGESTIONS = [
   // String functions
   { id: 'base64_decode(thing)', label: 'base64_decode(thing)', category: 'string' },
   { id: 'base64_encode(thing)', label: 'base64_encode(thing)', category: 'string' },
@@ -192,14 +196,26 @@ const EXPRESSION_SUGGESTIONS = [
 ];
 
 export function filterExpressions(query) {
-  if (!query || typeof query !== 'string') {
-    return EXPRESSION_SUGGESTIONS;
+  const q = (typeof query === 'string' ? query : '').toLowerCase().trim();
+
+  const isContactQuery =
+    !q ||
+    q === 'contact' ||
+    q.startsWith('contact ') ||
+    q.startsWith('contact.');
+
+  if (isContactQuery) {
+    const remainder =
+      !q || q === 'contact' || q === 'contact ' || q === 'contact.'
+        ? ''
+        : q.replace(/^contact\.?/, '').trim();
+    return toContactSuggestions(remainder);
   }
-  const q = query.toLowerCase().trim();
-  return EXPRESSION_SUGGESTIONS.filter(
+
+  return FUNCTION_SUGGESTIONS.filter(
     (item) =>
       item.label.toLowerCase().includes(q) || item.id.toLowerCase().includes(q)
   );
 }
 
-export { EXPRESSION_SUGGESTIONS };
+export { FUNCTION_SUGGESTIONS };
