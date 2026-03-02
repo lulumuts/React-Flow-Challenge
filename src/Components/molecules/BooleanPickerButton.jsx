@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
@@ -10,23 +10,23 @@ const OPTIONS = [
   { value: false, label: 'No' }
 ];
 
+const INITIAL_WIDTH = 360;
+
 /**
  * Compact Yes/No dropdown trigger (⬇️).
  * Stores true/false.
  */
 export default function BooleanPickerButton({ value, onSelect, containerRef }) {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [menuWidth, setMenuWidth] = useState(360);
+  const [menuWidth, setMenuWidth] = useState(INITIAL_WIDTH);
+  const buttonRef = useRef(null);
 
-  const handleOpen = () => setAnchorEl(containerRef?.current ?? null);
+  const handleOpen = () => {
+    const el = containerRef?.current ?? buttonRef.current ?? null;
+    setAnchorEl(el);
+    if (el) setMenuWidth(el.getBoundingClientRect().width ?? INITIAL_WIDTH);
+  };
   const handleClose = () => setAnchorEl(null);
-
-  useEffect(() => {
-    if (anchorEl && containerRef?.current) {
-      const w = containerRef.current.getBoundingClientRect().width;
-      setMenuWidth(w);
-    }
-  }, [anchorEl, containerRef]);
 
   const handleSelect = (val) => {
     onSelect(val);
@@ -35,7 +35,7 @@ export default function BooleanPickerButton({ value, onSelect, containerRef }) {
 
   return (
     <>
-      <ChevronButton onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open Yes/No picker" />
+      <ChevronButton ref={buttonRef} onClick={handleOpen} active={Boolean(anchorEl)} aria-label="Open Yes/No picker" />
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -43,43 +43,24 @@ export default function BooleanPickerButton({ value, onSelect, containerRef }) {
         anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
         transformOrigin={{ vertical: 'top', horizontal: 'left' }}
         PaperProps={{
-          sx: {
-            width: menuWidth,
-            minWidth: menuWidth,
-            maxWidth: menuWidth,
-            maxHeight: 280,
-            borderRadius: 4
-          }
+          className: 'boolean-picker-button__paper',
+          sx: { width: menuWidth, minWidth: menuWidth, maxWidth: menuWidth }
         }}
-        MenuListProps={{ disablePadding: true, sx: { pt: 1.5, pb: 0.5 } }}
+        MenuListProps={{ disablePadding: true, className: 'boolean-picker-button__menu-list' }}
       >
-        {OPTIONS.map((opt) => {
-          const isSelected = opt.value === value;
-          return (
-            <MenuItem
-              key={String(opt.value)}
-              onClick={() => handleSelect(opt.value)}
-              selected={isSelected}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                fontSize: '0.95rem',
-                borderRadius: 2,
-                mx: 1,
-                mb: 0.5,
-                py: 1.75,
-                '&:hover': { backgroundColor: '#d7c0ff' },
-                '&.Mui-selected': {
-                  backgroundColor: 'rgba(147, 112, 219, 0.2)',
-                  '&:hover': { backgroundColor: '#d7c0ff' }
-                }
-              }}
-            >
-              <Box component="span" sx={{ flex: 1 }}>{opt.label}</Box>
-              {isSelected && <CheckIcon sx={{ fontSize: 22, color: '#1a1a1a' }} />}
-            </MenuItem>
-          );
-        })}
+        {OPTIONS.map((opt) => (
+          <MenuItem
+            key={String(opt.value)}
+            onClick={() => handleSelect(opt.value)}
+            selected={opt.value === value}
+            className="boolean-picker-button__menu-item"
+          >
+            <Box component="span" className="boolean-picker-button__menu-item-label">
+              {opt.label}
+            </Box>
+            {opt.value === value && <CheckIcon />}
+          </MenuItem>
+        ))}
       </Menu>
     </>
   );

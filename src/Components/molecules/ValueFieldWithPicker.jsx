@@ -1,24 +1,9 @@
-import { useRef, useState } from 'react';
 import { ClearButton } from '../atoms';
 import TiptapValueField from './TiptapValueField';
 import DatePickerButton from './DatePickerButton';
 import BooleanPickerButton from './BooleanPickerButton';
 import EnumPickerButton from './EnumPickerButton';
-
-function formatDisplayValue(fieldType, value, fieldOptions) {
-  if (value == null || value === '') return '';
-  switch (fieldType) {
-    case 'boolean':
-      return value ? 'Yes' : 'No';
-    case 'date':
-      return new Date(value).toLocaleDateString();
-    case 'enum':
-      const opt = (fieldOptions || []).find((o) => o.value === value);
-      return opt ? (opt.label ?? opt.value) : String(value);
-    default:
-      return String(value);
-  }
-}
+import { useValueFieldWithPicker } from '../../hooks/useValueFieldWithPicker';
 
 export default function ValueFieldWithPicker({
   label = 'Value',
@@ -30,92 +15,59 @@ export default function ValueFieldWithPicker({
   editable,
   disabled = false
 }) {
-  const valueContainerRef = useRef(null);
-  const [loadedOptions, setLoadedOptions] = useState([]);
-  const [savedOutput, setSavedOutput] = useState(null);
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
-
-  const resolvedOptions = optionsLoader ? loadedOptions : fieldOptions;
-  const hasPickerValue = ['date', 'boolean', 'enum'].includes(fieldType) && value != null && value !== '';
-  const displayValue = formatDisplayValue(fieldType, value, resolvedOptions);
-  const showSubmitForPicker = hasPickerValue && (fieldType === 'boolean' || fieldType === 'date' || fieldType === 'enum');
-
-  const handlePickerSubmit = () => {
-    if (hasPickerValue) {
-      setSavedOutput(displayValue);
-      onValueChange?.(null);
-    }
-  };
+  const {
+    valueContainerRef,
+    setLoadedOptions,
+    resolvedOptions,
+    hasPickerValue,
+    displayValue,
+    fieldModifier,
+    savedOutput,
+    handlePickerSubmit,
+    handleClear
+  } = useValueFieldWithPicker({ fieldType, fieldOptions, optionsLoader, value, onValueChange, disabled });
 
   if (fieldType === 'text') {
     return (
-      <div style={{ opacity: disabled ? 0.5 : 1, pointerEvents: disabled ? 'none' : 'auto' }}>
+      <div className={`nodrag ${disabled ? 'value-field-with-picker--disabled' : ''}`}>
         <TiptapValueField label={label} editable={editable} />
       </div>
     );
   }
 
+  const pickerProps = { containerRef: valueContainerRef, onSelect: (v) => onValueChange?.(v) };
+
   return (
-    <div
-      style={{
-        width: 360,
-        padding: '6px 8px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: 8,
-        opacity: disabled ? 0.5 : 1,
-        pointerEvents: disabled ? 'none' : 'auto'
-      }}
-      className="nodrag"
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-          <label style={{ fontSize: '0.8rem', minWidth: 40, flexShrink: 0, opacity: 0.7 }}>{label}</label>
+    <div className={`value-field-with-picker nodrag ${disabled ? 'value-field-with-picker--disabled' : ''}`}>
+      <div className="value-field-with-picker__content">
+        <div className="value-field-with-picker__row">
+          <label className="value-field-with-picker__label">{label}</label>
           <div
             ref={valueContainerRef}
-            className="value-field"
-            style={{
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
-              minHeight: 48,
-              borderRadius: 12,
-              border: '1px solid rgba(0, 0, 0, 0.23)',
-              backgroundColor: hasPickerValue ? 'rgba(0, 0, 0, 0.04)' : disabled ? 'rgba(0, 0, 0, 0.04)' : 'transparent',
-              padding: '0 8px 0 12px',
-              overflow: 'hidden'
-            }}
+            className={`value-field-with-picker__field value-field-with-picker__field--${fieldModifier}`}
           >
             {hasPickerValue ? (
               <>
-                <span style={{ flex: 1, fontSize: '0.8rem', color: '#333' }}>{displayValue}</span>
-                <div style={{ marginLeft: 8, flexShrink: 0 }}>
-                  <ClearButton onClick={() => onValueChange?.(null)} />
+                <span className="value-field-with-picker__display-value">{displayValue}</span>
+                <div className="value-field-with-picker__actions">
+                  <ClearButton onClick={handleClear} />
                 </div>
               </>
             ) : (
               <>
-                <div style={{ flex: 1, minWidth: 0, minHeight: 48, display: 'flex' }}>
+                <div className="value-field-with-picker__editor-wrap">
                   <TiptapValueField embedded editable={editable} />
                 </div>
-                <div style={{ marginLeft: 8, flexShrink: 0 }}>
-                  {fieldType === 'date' && <DatePickerButton containerRef={valueContainerRef} onSelect={(v) => onValueChange?.(v)} />}
-                  {fieldType === 'boolean' && (
-                    <BooleanPickerButton
-                      containerRef={valueContainerRef}
-                      value={value}
-                      onSelect={(v) => onValueChange?.(v)}
-                    />
-                  )}
+                <div className="value-field-with-picker__actions">
+                  {fieldType === 'date' && <DatePickerButton {...pickerProps} />}
+                  {fieldType === 'boolean' && <BooleanPickerButton {...pickerProps} value={value} />}
                   {fieldType === 'enum' && (
                     <EnumPickerButton
-                      containerRef={valueContainerRef}
+                      {...pickerProps}
                       options={resolvedOptions}
                       optionsLoader={optionsLoader}
                       onOptionsLoaded={setLoadedOptions}
                       value={value}
-                      onSelect={(v) => onValueChange?.(v)}
                     />
                   )}
                 </div>
@@ -123,49 +75,18 @@ export default function ValueFieldWithPicker({
             )}
           </div>
         </div>
-        {showSubmitForPicker && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 16 }}>
-            <span style={{ width: 40, flexShrink: 0 }} />
-            <button
-              type="button"
-              onClick={handlePickerSubmit}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
-              style={{
-                flex: 1,
-                height: 48,
-                padding: '0 16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '0.8rem',
-              fontWeight: 500,
-              color: isButtonHovered ? '#fff' : '#8350cb',
-              backgroundColor: isButtonHovered ? '#8350cb' : 'transparent',
-              border: '1px solid #8350cb',
-              borderRadius: 12,
-              cursor: 'pointer',
-              boxSizing: 'border-box'
-            }}
-          >
-            Submit
-          </button>
+        {hasPickerValue && (
+          <div className="value-field-with-picker__submit-row">
+            <span className="value-field-with-picker__spacer" />
+            <button type="button" className="value-field-with-picker__submit" onClick={handlePickerSubmit}>
+              Submit
+            </button>
           </div>
         )}
       </div>
       {savedOutput != null && savedOutput !== '' && (
-        <div
-          style={{
-            padding: 10,
-            fontSize: '0.8rem',
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
-            borderRadius: 8,
-            color: '#333',
-            whiteSpace: 'pre-wrap',
-            wordBreak: 'break-word'
-          }}
-        >
-          <div style={{ fontSize: '0.7rem', opacity: 0.7, marginBottom: 4 }}>Output</div>
+        <div className="value-field-with-picker__output">
+          <div className="value-field-with-picker__output-label">Output</div>
           {savedOutput}
         </div>
       )}

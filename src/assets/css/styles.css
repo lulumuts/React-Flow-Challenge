@@ -1,3 +1,217 @@
+/* Input select field (Field dropdown) */
+.input-select-field {
+  width: 360px;
+  padding: 6px 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.input-select-field__label {
+  font-size: 0.8rem;
+  min-width: 40px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.field-select-form-control {
+  flex: 1;
+  min-width: 0;
+}
+.field-select-form-control .MuiOutlinedInput-root {
+  height: 48px !important;
+  min-height: 48px !important;
+}
+.field-select-form-control .MuiSelect-select {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+.field-select-form-control fieldset {
+  border-radius: 12px;
+}
+.field-select-form-control .MuiSelect-icon {
+  font-size: 20px;
+}
+.input-select-field__value {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.input-select-field__filter-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--mui-palette-background-paper, #fff);
+  z-index: 1;
+  padding: 12px 8px 4px;
+  line-height: 0;
+}
+.input-select-field__filter .MuiOutlinedInput-root {
+  font-size: 0.8rem;
+  border-radius: 8px;
+  height: 56px;
+}
+.input-select-field__menu-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  margin: 0 4px 2px;
+  padding: 14px 12px;
+}
+.input-select-field__menu-item:hover {
+  background-color: #d7c0ff;
+}
+.input-select-field__menu-item.Mui-selected {
+  background-color: rgba(147, 112, 219, 0.2);
+}
+.input-select-field__menu-item.Mui-selected:hover {
+  background-color: #d7c0ff;
+}
+.input-select-field__menu-item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.input-select-field__field-icon {
+  display: inline-flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+.input-select-field__menu {
+  border-radius: 6px;
+  max-height: 280px;
+}
+
+/* Enum input field */
+.enum-input-field {
+  width: 232px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.enum-input-field__label {
+  font-size: 0.8rem;
+  min-width: 48px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.enum-input-field__control {
+  flex: 1;
+}
+.enum-input-field__control .MuiSelect-select {
+  font-size: 0.8rem;
+}
+.enum-input-field__control fieldset {
+  border-radius: 12px;
+}
+.enum-input-field__control .MuiOutlinedInput-root {
+  height: 40px;
+  border-radius: 12px;
+}
+.enum-input-field__menu {
+  width: 300px;
+}
+.enum-input-field__menu-item {
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+}
+.enum-input-field__menu-item:hover {
+  background-color: #d7c0ff;
+}
+.enum-input-field__menu-item.Mui-selected {
+  background-color: rgba(147, 112, 219, 0.2);
+}
+.enum-input-field__menu-item.Mui-selected:hover {
+  background-color: #d7c0ff;
+}
+.enum-input-field__menu-item-label {
+  flex: 1;
+}
+
+/* Boolean picker button (Yes/No dropdown) */
+.boolean-picker-button__paper {
+  max-height: 280px;
+  border-radius: 4px;
+}
+.boolean-picker-button__menu-list {
+  padding-top: 12px;
+  padding-bottom: 4px;
+}
+.boolean-picker-button__menu-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  margin: 0 4px 2px;
+  padding: 14px 12px;
+}
+.boolean-picker-button__menu-item:hover {
+  background-color: #d7c0ff;
+}
+.boolean-picker-button__menu-item.Mui-selected {
+  background-color: rgba(147, 112, 219, 0.2);
+}
+.boolean-picker-button__menu-item.Mui-selected:hover {
+  background-color: #d7c0ff;
+}
+.boolean-picker-button__menu-item-label {
+  flex: 1;
+}
+.boolean-picker-button__menu-item .MuiSvgIcon-root {
+  font-size: 22px;
+  color: #1a1a1a;
+}
+
+/* Enum picker button (dropdown for Date/Boolean/Enum in value field) */
+.enum-picker-button__paper {
+  max-height: 280px;
+  border-radius: 4px;
+}
+.enum-picker-button__menu-list {
+  max-height: 240px;
+  overflow: auto;
+}
+.enum-picker-button__filter-wrapper {
+  padding: 12px 8px 4px;
+}
+.enum-picker-button__filter .MuiOutlinedInput-root {
+  font-size: 0.8rem;
+  border-radius: 8px;
+  height: 48px;
+}
+.enum-picker-button__menu-item {
+  font-size: 0.8rem;
+  border-radius: 8px;
+  margin: 0 4px 2px;
+}
+.enum-picker-button__menu-item:hover {
+  background-color: #d7c0ff;
+}
+.enum-picker-button__menu-item.Mui-selected {
+  background-color: rgba(147, 112, 219, 0.2);
+}
+.enum-picker-button__menu-item.Mui-selected:hover {
+  background-color: #d7c0ff;
+}
+.enum-picker-button__menu-item-label {
+  flex: 1;
+}
+.enum-picker-button__menu-item--loading,
+.enum-picker-button__menu-item--empty {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 16px;
+}
+.enum-picker-button__menu-item--more {
+  font-size: 0.75rem;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 8px;
+}
+
 /* Expression suggestion list (Turn.io @ expressions popover) */
 .expression-suggestion-list {
   background: #fff;
@@ -67,4 +281,326 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+/* TipTap value field */
+.tiptap-value-field {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  min-height: 48px;
+  background-color: #fff;
+  cursor: text;
+  padding: 0;
+  overflow: hidden;
+}
+.tiptap-value-field--embedded {
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  cursor: inherit;
+}
+.tiptap-value-field--disabled {
+  background-color: rgba(0, 0, 0, 0.04);
+  cursor: not-allowed;
+}
+.tiptap-value-field__actions {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  margin-right: 4px;
+}
+.tiptap-value-field__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background-color: transparent;
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  padding: 0;
+  appearance: none;
+  outline: none;
+}
+.tiptap-value-field__clear:hover {
+  background-color: rgba(131, 80, 203, 0.12);
+}
+.tiptap-value-field-standalone {
+  width: 360px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tiptap-value-field-standalone__content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.tiptap-value-field-standalone__row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.tiptap-value-field-standalone__label {
+  font-size: 0.8rem;
+  min-width: 40px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.tiptap-value-field-standalone__editor {
+  flex: 1;
+  min-width: 0;
+}
+.tiptap-value-field-standalone__submit-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+.tiptap-value-field-standalone__spacer {
+  width: 40px;
+  flex-shrink: 0;
+}
+.tiptap-value-field-standalone__submit {
+  flex: 1;
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8350cb;
+  background-color: transparent;
+  border: 1px solid #8350cb;
+  border-radius: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.tiptap-value-field-standalone__submit:hover:not(:disabled) {
+  color: #fff;
+  background-color: #8350cb;
+}
+.tiptap-value-field-standalone__submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.tiptap-value-field-standalone__output {
+  padding: 10px;
+  font-size: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.tiptap-value-field-standalone__output-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+/* Value field with picker (Date/Boolean/Enum) */
+.value-field-with-picker {
+  width: 360px;
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.value-field-with-picker--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.value-field-with-picker__content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.value-field-with-picker__row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.value-field-with-picker__label {
+  font-size: 0.8rem;
+  min-width: 40px;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.value-field-with-picker__field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 48px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  padding: 0 8px 0 12px;
+  overflow: hidden;
+}
+.value-field-with-picker__field--readonly,
+.value-field-with-picker__field--disabled {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.value-field-with-picker__field--editing {
+  background-color: transparent;
+}
+.value-field-with-picker__display-value {
+  flex: 1;
+  font-size: 0.8rem;
+  color: #333;
+}
+.value-field-with-picker__actions {
+  margin-left: 8px;
+  flex-shrink: 0;
+}
+.value-field-with-picker__editor-wrap {
+  flex: 1;
+  min-width: 0;
+  min-height: 48px;
+  display: flex;
+}
+.value-field-with-picker__submit-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+}
+.value-field-with-picker__spacer {
+  width: 40px;
+  flex-shrink: 0;
+}
+.value-field-with-picker__submit {
+  flex: 1;
+  height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #8350cb;
+  background-color: transparent;
+  border: 1px solid #8350cb;
+  border-radius: 12px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.value-field-with-picker__submit:hover {
+  color: #fff;
+  background-color: #8350cb;
+}
+.value-field-with-picker__output {
+  padding: 10px;
+  font-size: 0.8rem;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 8px;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.value-field-with-picker__output-label {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  margin-bottom: 4px;
+}
+
+/* Card form (Update Profile Field node) */
+.card-form {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+.card-form__container {
+  width: 400px;
+  position: relative;
+}
+.card-form__paper {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border: 2px solid #8350cb;
+  box-shadow: none;
+}
+.card-form__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  height: 56px;
+  min-height: 56px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  background-color: rgba(0, 0, 0, 0.04);
+  border-radius: 16px 16px 0 0;
+}
+.card-form__header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background-color: #f4b3ff;
+  border-radius: 6px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.card-form__header-title {
+  margin: 0;
+  flex: 1;
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.55);
+}
+.card-form__header-info-btn {
+  padding: 0;
+  min-width: 28px;
+  min-height: 28px;
+  color: rgba(0, 0, 0, 0.6);
+}
+.card-form__header-info-btn:hover {
+  color: rgba(0, 0, 0, 0.87);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+.card-form__header-info-btn.Mui-focusVisible {
+  outline: none;
+  box-shadow: none;
+}
+.card-form__content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 9px;
+}
+.card-form__add-btn {
+  margin-left: 4px;
+  width: 28px;
+  height: 28px;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(131, 80, 203, 0.12);
+}
+.card-form__add-btn:hover {
+  background-color: rgba(131, 80, 203, 0.24);
+  color: rgba(0, 0, 0, 0.87);
+}
+.card-form__add-btn.Mui-focusVisible {
+  outline: none;
+  box-shadow: none;
+}
+.card-form__add-btn .MuiSvgIcon-root {
+  font-size: 18px;
 }

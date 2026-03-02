@@ -64,19 +64,14 @@ button:focus-visible {
   font-weight: 500;
 }
 
-/* Field select input - force height (overrides MUI small/dense) */
-.field-select-form-control .MuiOutlinedInput-root {
-  height: 48px !important;
-  min-height: 48px !important;
-}
-
 /* @ button hover state */
 .at-button:hover {
   background-color: rgba(131, 80, 203, 0.12) !important;
 }
 
 /* Value field - remove border from inner buttons (chevron, clear, etc.) */
-.value-field button {
+.value-field button,
+.value-field-with-picker__field button {
   border: none;
 }
 
