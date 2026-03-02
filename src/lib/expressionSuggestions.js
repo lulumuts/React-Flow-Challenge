@@ -195,6 +195,21 @@ const FUNCTION_SUGGESTIONS = [
   { id: 'time_elapsed(start_time)', label: 'time_elapsed(start_time)', category: 'integrations' }
 ];
 
+/**
+ * Client-side filter for suggestion list. Matches items by label, id, or displayLabel.
+ */
+export function filterSuggestionsByQuery(items, query) {
+  if (!items || items.length === 0) return [];
+  const q = (query || '').toLowerCase().trim();
+  if (!q) return items;
+  return items.filter(
+    (item) =>
+      (item.label || '').toLowerCase().includes(q) ||
+      (item.id || '').toLowerCase().includes(q) ||
+      (item.displayLabel || '').toLowerCase().includes(q)
+  );
+}
+
 export function filterExpressions(query) {
   const q = (typeof query === 'string' ? query : '').toLowerCase().trim();
 

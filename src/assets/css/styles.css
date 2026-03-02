@@ -1,0 +1,70 @@
+/* Expression suggestion list (Turn.io @ expressions popover) */
+.expression-suggestion-list {
+  background: #fff;
+  color: #1a1a1a;
+  border-radius: 12px;
+  box-shadow: 0px 5px 5px -3px rgba(0,0,0,0.2), 0px 8px 10px 1px rgba(0,0,0,0.14), 0px 3px 14px 2px rgba(0,0,0,0.12);
+  max-height: 280px;
+  min-width: 360px;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.expression-suggestion-list__filter {
+  flex-shrink: 0;
+  padding: 12px 8px 4px;
+  line-height: 0;
+}
+.expression-suggestion-list__list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 0 4px 4px;
+}
+.expression-suggestion-list__empty {
+  padding: 12px;
+  font-size: 0.75rem;
+  color: rgba(0,0,0,0.5);
+}
+.expression-suggestion-list__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 8px;
+  margin: 0 8px 4px 8px;
+  color: #1a1a1a;
+  background-color: transparent;
+}
+.expression-suggestion-list__item:hover {
+  background-color: #d7c0ff;
+}
+.expression-suggestion-list__item--selected {
+  background-color: rgba(147, 112, 219, 0.2);
+}
+.expression-suggestion-list__item--selected:hover {
+  background-color: #d7c0ff;
+}
+.expression-suggestion-list__item-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+}
+.expression-suggestion-list__item-label {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.expression-suggestion-list__item-check {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

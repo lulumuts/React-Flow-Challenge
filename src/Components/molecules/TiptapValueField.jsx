@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Mention from '@tiptap/extension-mention';
 import { filterExpressions } from '../../lib/expressionSuggestions';
-import ExpressionSuggestionList from './ExpressionSuggestionList';
+import ExpressionSuggestionList from '../organisms/ExpressionSuggestionList';
 import { AtButton } from '../atoms';
 import CloseIcon from '@mui/icons-material/Close';
 

@@ -10,8 +10,8 @@ A React Flow application with custom nodes for updating profile fields. Built wi
 The UI is built using **atomic design**, with components organized as atoms → molecules → organisms:
 
 - **Atoms** – Small, reusable primitives (e.g. `AtButton`, `ChevronButton`, `ClearButton`, `FieldTypeIcon`, `ProfileHeaderIcons`)
-- **Molecules** – Combinations of atoms (e.g. `InputSelectField`, `TiptapValueField`, `ExpressionSuggestionList`)
-- **Organisms** – Full sections or nodes (e.g. `Card`, `CustomEdge`)
+- **Molecules** – Combinations of atoms (e.g. `SuggestionItem`, `InputSelectField`, `TiptapValueField`)
+- **Organisms** – Full sections or nodes (e.g. `Card`, `CustomEdge`, `ExpressionSuggestionList`)
 
 This structure promotes reusability and keeps components focused and testable.
 
@@ -74,14 +74,15 @@ src/
 │   │   ├── FieldTypeIcons.jsx
 │   │   └── ProfileHeaderIcons.jsx
 │   ├── molecules/                         # Atomic design – composed components
-│   │   ├── ExpressionSuggestionList.jsx  # Expression @ suggestions UI
-│   │   ├── InputSelectField.jsx          # Field dropdown
-│   │   ├── TiptapValueField.jsx          # Value editor (TipTap + expressions)
-│   │   ├── ValueFieldWithPicker.jsx      # Value field with Date/Boolean/Enum pickers
+│   │   ├── SuggestionItem.jsx             # Suggestion row (icon + label + check)
+│   │   ├── InputSelectField.jsx           # Field dropdown
+│   │   ├── TiptapValueField.jsx           # Value editor (TipTap + expressions)
+│   │   ├── ValueFieldWithPicker.jsx       # Value field with Date/Boolean/Enum pickers
 │   │   └── ...
 │   └── organisms/                         # Atomic design – full sections
 │       ├── Card.jsx                       # Custom node component
-│       └── CustomEdge.jsx
+│       ├── CustomEdge.jsx
+│       └── ExpressionSuggestionList.jsx   # Expression @ suggestions popover
 ├── lib/
 │   ├── expressionSuggestions.js          # Mock expression data
 │   ├── languageOptions.js                # ISO 639-3 language options
