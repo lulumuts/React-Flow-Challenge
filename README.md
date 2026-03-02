@@ -94,22 +94,41 @@ src/
 │   │   ├── FieldTypeIcons.jsx
 │   │   └── ProfileHeaderIcons.jsx
 │   ├── molecules/                         # Atomic design – composed components
-│   │   ├── SuggestionItem.jsx             # Suggestion row (icon + label + check)
+│   │   ├── BooleanInputField.jsx
+│   │   ├── BooleanPickerButton.jsx
+│   │   ├── DateInputField.jsx
+│   │   ├── DatePickerButton.jsx
+│   │   ├── EnumInputField.jsx
+│   │   ├── EnumPickerButton.jsx
 │   │   ├── InputSelectField.jsx           # Field dropdown
+│   │   ├── InputTextField.jsx
+│   │   ├── SuggestionItem.jsx
 │   │   ├── TiptapValueField.jsx           # Value editor (TipTap + expressions)
-│   │   ├── ValueFieldWithPicker.jsx       # Value field with Date/Boolean/Enum pickers
-│   │   └── ...
+│   │   └── ValueFieldWithPicker.jsx      # Value field with Date/Boolean/Enum pickers
 │   └── organisms/                         # Atomic design – full sections
 │       ├── Card.jsx                       # Custom node component
 │       ├── CustomEdge.jsx
 │       └── ExpressionSuggestionList.jsx   # Expression @ suggestions popover
+├── hooks/
+│   ├── useCardForm.js
+│   ├── useEnumPicker.js
+│   ├── useExpressionEditor.js
+│   ├── useSuggestionListState.js
+│   └── useValueFieldWithPicker.js
 ├── lib/
-│   ├── expressionSuggestions.js          # Mock expression data
+│   ├── cardFieldOptions.js
+│   ├── expressionSuggestions.js
 │   ├── languageOptions.js                # ISO 639-3 language options
-│   └── turnioExpressionSchema.js         # Turn.io expression schema
-└── assets/
-    ├── field-types/                      # Turn.io field type icons
-    └── images/                           # README documentation screenshots
+│   ├── turnioExpressionSchema.js
+│   └── valueFormatters.js
+├── assets/
+│   ├── css/
+│   │   └── styles.css
+│   ├── field-types/                      # Turn.io field type icons + AtSign.svg
+│   └── images/                           # README documentation screenshots
+
+scripts/
+└── generate-language-options.mjs          # Generates languageOptions.js from ISO 639-3
 ```
 
 ## Getting started
