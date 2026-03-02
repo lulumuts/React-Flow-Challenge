@@ -40,6 +40,7 @@ This structure promotes reusability and keeps components focused and testable.
   - Dotpoints_01-ENUM.svg (Enum)
   - CalendarDate-DATETIME.svg (Date)
   - Calculator-INTEGER.svg (Integer)
+  - AtSign.svg (@ expression button)
 
 ### Value field
 - **TipTap** – WYSIWYG editor for rich text input

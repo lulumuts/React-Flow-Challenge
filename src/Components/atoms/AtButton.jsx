@@ -1,4 +1,4 @@
-import atSignSvg from '../../assets/AtSign.svg';
+import atSignSvg from '../../assets/field-types/AtSign.svg';
 
 /**
  * Button with @ icon for inserting Turn.io expressions.
