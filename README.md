@@ -15,22 +15,23 @@ The UI is built using **atomic design**, with components organized as atoms → 
 
 This structure promotes reusability and keeps components focused and testable.
 
-### React Flow add-node functionality
-A custom **add (+) button** is integrated into each card node. Clicking it creates a new node below the current one and connects them with an edge. Nodes can be chained to build flows.
-
-![React Flow add-node example](docs-add-node.png)
-
 ## Features
 
 ### Basic React Flow configuration
 - Custom node type for the "Update Profile Field" card
 - Custom edges with purple styling
 - Add-node (+) button to create new nodes below the current one
+
+  A custom **add (+) button** is integrated into each card node. Clicking it creates a new node below the current one and connects them with an edge. Nodes can be chained to build flows.
+
+  ![React Flow add-node example](docs-add-node.png)
 - Connection handles on the left for flow edges
 
 ### Field input
 - **Field name types** – Includes profile fields such as Name, Surname, Location, Opted In, Language, Birthday, Is Blocked, and custom fields
 - **Languages** – ISO 639-3 languages fetched from `src/lib/languageOptions.js`
+
+  ![Language dropdown](docs-languages.png)
 - **Searchable** – Field type is searchable in the input field
 - **Icons** – Field type icons provided by Turn.io, located in `src/assets/field-types/`
   - Type_01-STRING.svg (Text)
@@ -42,18 +43,28 @@ A custom **add (+) button** is integrated into each card node. Clicking it creat
 
 ### Value field
 - **TipTap** – WYSIWYG editor for rich text input
+
+  ![TipTap value field with expressions](docs-tiptap-value-field.png)
 - **Not editable by default** – Value field is disabled until a field is selected
 - **Turn.io Expression Language** – Integrated expression suggestions:
+
+  ![Turn.io Expression Language](docs-turnio-expressions.png)
   - Schema defined in `src/lib/turnioExpressionSchema.js` using Turn.io documentation
   - Mock data in `src/lib/expressionSuggestions.js` (API key placeholder)
   - Business logic in `src/Components/molecules/ExpressionSuggestionList.jsx`
   - Typing `@` in the input displays the expressions list
+
+    ![Expression suggestions list](docs-expressions-list.png)
   - Clicking the `@` button also displays the expressions list
 
 ### Field types
 - **Text** – No dropdown (⬇️) button; inline text editing with TipTap
 - **Date / Boolean / Enum** – Dropdown (⬇️) button present for picking values
+
+  ![Date/Boolean/Enum picker](docs-field-types-picker.png)
 - **Clear button** – When a value is selected, an ✕ button appears to clear the input; the field is not editable while a value is set
+
+  ![Clear button when value is selected](docs-clear-button.png)
 
 ### Saving
 - **Submit button** – When the value field is populated (for Date/Boolean/Enum types), a Submit button appears to save the values

@@ -28,7 +28,7 @@ export default function CardForm({ id }) {
         <Handle type="target" position={Position.Left} />
         <Handle type="source" position={Position.Left} id="a" />
 
-        <MuiCard className="card-form__paper">
+        <MuiCard className="card-form__paper" sx={{ borderRadius: '16px', overflow: 'hidden' }}>
           <div className="card-form__header card-drag-handle">
             <span className="card-form__header-icon">
               <UserIcon size={16} />
@@ -65,10 +65,22 @@ export default function CardForm({ id }) {
       </div>
 
       <IconButton
-        className="card-form__add-btn nodrag"
+        className="nodrag"
         onClick={handleAddNode}
         aria-label="Add node"
         size="small"
+        sx={{
+          ml: 0.5,
+          width: 36,
+          height: 36,
+          color: 'rgba(0, 0, 0, 0.6)',
+          backgroundColor: '#f3eff9',
+          '&:hover': {
+            backgroundColor: '#e8ddf5',
+            color: 'rgba(0, 0, 0, 0.87)'
+          },
+          '& .MuiSvgIcon-root': { fontSize: 22 }
+        }}
       >
         <AddIcon />
       </IconButton>

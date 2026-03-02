@@ -70,17 +70,27 @@ export default function InputSelectField({ data, value, onChange, options = [] }
           }}
           sx={{ borderRadius: '6px' }}
           MenuProps={{
+            anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
+            transformOrigin: { vertical: 'top', horizontal: 'left' },
             PaperProps: {
               className: 'input-select-field__menu',
               sx: {
-                width: anchorWidth ?? 188,
-                minWidth: anchorWidth ?? 188,
-                maxWidth: anchorWidth ?? 188
+                width: anchorWidth ?? 360,
+                minWidth: anchorWidth ?? 360,
+                maxWidth: anchorWidth ?? 360,
+                maxHeight: 320,
+                borderRadius: '12px'
               }
             },
-            MenuListProps: { disablePadding: true }
+            MenuListProps: {
+              disablePadding: true,
+              sx: { maxHeight: 280, overflow: 'auto' }
+            }
           }}
         >
+          <ListSubheader component="div" className="input-select-field__section-label">
+            Field name types
+          </ListSubheader>
           <ListSubheader component="div" className="input-select-field__filter-header">
             <TextField
               size="small"
@@ -101,7 +111,14 @@ export default function InputSelectField({ data, value, onChange, options = [] }
                   </InputAdornment>
                 )
               }}
-              sx={{ width: '100%' }}
+              sx={{
+                width: '100%',
+                '& .MuiOutlinedInput-root': {
+                  borderRadius: '12px',
+                  height: 40,
+                  minHeight: 40
+                }
+              }}
             />
           </ListSubheader>
           {filteredOptions.map((opt) => {
@@ -112,6 +129,16 @@ export default function InputSelectField({ data, value, onChange, options = [] }
                 value={opt.value}
                 selected={isSelected}
                 className="input-select-field__menu-item"
+                sx={{
+                  fontSize: '0.9rem',
+                  borderRadius: '8px',
+                  margin: '0 4px 2px',
+                  '&:hover': { backgroundColor: '#d7c0ff' },
+                  '&.Mui-selected': {
+                    backgroundColor: 'rgba(147, 112, 219, 0.2)',
+                    '&:hover': { backgroundColor: '#d7c0ff' }
+                  }
+                }}
               >
                 <FieldIcon icon={opt.icon || opt.type} />
                 <span className="input-select-field__menu-item-label">{opt.label}</span>

@@ -36,6 +36,14 @@
   align-items: center;
   gap: 4px;
 }
+.input-select-field__section-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.6);
+  padding: 8px 12px 4px;
+  line-height: 1.4;
+  background-color: var(--mui-palette-background-paper, #fff);
+}
 .input-select-field__filter-header {
   position: sticky;
   top: 0;
@@ -46,13 +54,11 @@
 }
 .input-select-field__filter .MuiOutlinedInput-root {
   font-size: 0.8rem;
-  border-radius: 8px;
-  height: 56px;
 }
 .input-select-field__menu-item {
   display: flex;
   align-items: center;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   border-radius: 8px;
   margin: 0 4px 2px;
   padding: 14px 12px;
@@ -61,10 +67,10 @@
   background-color: #d7c0ff;
 }
 .input-select-field__menu-item.Mui-selected {
-  background-color: rgba(147, 112, 219, 0.2);
+  background-color: rgba(147, 112, 219, 0.2) !important;
 }
 .input-select-field__menu-item.Mui-selected:hover {
-  background-color: #d7c0ff;
+  background-color: #d7c0ff !important;
 }
 .input-select-field__menu-item-label {
   flex: 1;
@@ -588,13 +594,14 @@
 }
 .card-form__add-btn {
   margin-left: 4px;
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   color: rgba(0, 0, 0, 0.6);
-  background-color: rgba(131, 80, 203, 0.12);
+  background-color: #e5dcf2;
+  border: none;
 }
 .card-form__add-btn:hover {
-  background-color: rgba(131, 80, 203, 0.24);
+  background-color: #d7c0ff;
   color: rgba(0, 0, 0, 0.87);
 }
 .card-form__add-btn.Mui-focusVisible {
@@ -602,5 +609,5 @@
   box-shadow: none;
 }
 .card-form__add-btn .MuiSvgIcon-root {
-  font-size: 18px;
+  font-size: 22px;
 }
