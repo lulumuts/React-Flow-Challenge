@@ -46,16 +46,17 @@ This structure promotes reusability and keeps components focused and testable.
 
   ![TipTap value field with expressions](docs-tiptap-value-field.png)
 - **Not editable by default** – Value field is disabled until a field is selected
+
+  ![Value field not editable by default](docs-value-field-default.png)
 - **Turn.io Expression Language** – Integrated expression suggestions:
 
   ![Turn.io Expression Language](docs-turnio-expressions.png)
   - Schema defined in `src/lib/turnioExpressionSchema.js` using Turn.io documentation
   - Mock data in `src/lib/expressionSuggestions.js` (API key placeholder)
   - Business logic in `src/Components/molecules/ExpressionSuggestionList.jsx`
-  - Typing `@` in the input displays the expressions list
+  - Typing `@` in the input or clicking the `@` button displays the expressions list
 
     ![Expression suggestions list](docs-expressions-list.png)
-  - Clicking the `@` button also displays the expressions list
 
 ### Field types
 - **Text** – No dropdown (⬇️) button; inline text editing with TipTap
@@ -69,6 +70,13 @@ This structure promotes reusability and keeps components focused and testable.
 ### Saving
 - **Submit button** – When the value field is populated (for Date/Boolean/Enum types), a Submit button appears to save the values
 - **Dynamic updates** – When a new selection is made in the card, the saved value updates with the new data
+
+<table>
+<tr>
+<td><img src="docs-saving-submit.png" alt="Submit with expression value" width="300"/></td>
+<td><img src="docs-saving-output.png" alt="Output after submit" width="300"/></td>
+</tr>
+</table>
 
 ### Icons
 - Field type icons downloaded from Google Drive and included in `src/assets/field-types/`
