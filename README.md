@@ -2,7 +2,7 @@
 
 A React Flow application with custom nodes for updating profile fields. Built with React, Vite, TipTap, and Turn.io Expression Language integration.
 
-![Update Profile Field Node](docs-screenshot.png)
+![Update Profile Field Node](src/assets/images/docs-screenshot.png)
 
 ## Architecture
 
@@ -24,14 +24,14 @@ This structure promotes reusability and keeps components focused and testable.
 
   A custom **add (+) button** is integrated into each card node. Clicking it creates a new node below the current one and connects them with an edge. Nodes can be chained to build flows.
 
-  ![React Flow add-node example](docs-add-node.png)
+  ![React Flow add-node example](src/assets/images/docs-add-node.png)
 - Connection handles on the left for flow edges
 
 ### Field input
 - **Field name types** – Includes profile fields such as Name, Surname, Location, Opted In, Language, Birthday, Is Blocked, and custom fields
 - **Languages** – ISO 639-3 languages fetched from `src/lib/languageOptions.js`
 
-  ![Language dropdown](docs-languages.png)
+  ![Language dropdown](src/assets/images/docs-languages.png)
 - **Searchable** – Field type is searchable in the input field
 - **Icons** – Field type icons provided by Turn.io, located in `src/assets/field-types/`
   - Type_01-STRING.svg (Text)
@@ -44,28 +44,28 @@ This structure promotes reusability and keeps components focused and testable.
 ### Value field
 - **TipTap** – WYSIWYG editor for rich text input
 
-  ![TipTap value field with expressions](docs-tiptap-value-field.png)
+  ![TipTap value field with expressions](src/assets/images/docs-tiptap-value-field.png)
 - **Not editable by default** – Value field is disabled until a field is selected
 
-  ![Value field not editable by default](docs-value-field-default.png)
+  ![Value field not editable by default](src/assets/images/docs-value-field-default.png)
 - **Turn.io Expression Language** – Integrated expression suggestions:
 
-  ![Turn.io Expression Language](docs-turnio-expressions.png)
+  ![Turn.io Expression Language](src/assets/images/docs-turnio-expressions.png)
   - Schema defined in `src/lib/turnioExpressionSchema.js` using Turn.io documentation
   - Mock data in `src/lib/expressionSuggestions.js` (API key placeholder)
   - Business logic in `src/Components/molecules/ExpressionSuggestionList.jsx`
   - Typing `@` in the input or clicking the `@` button displays the expressions list
 
-    ![Expression suggestions list](docs-expressions-list.png)
+    ![Expression suggestions list](src/assets/images/docs-expressions-list.png)
 
 ### Field types
 - **Text** – No dropdown (⬇️) button; inline text editing with TipTap
 - **Date / Boolean / Enum** – Dropdown (⬇️) button present for picking values
 
-  ![Date/Boolean/Enum picker](docs-field-types-picker.png)
+  ![Date/Boolean/Enum picker](src/assets/images/docs-field-types-picker.png)
 - **Clear button** – When a value is selected, an ✕ button appears to clear the input; the field is not editable while a value is set
 
-  ![Clear button when value is selected](docs-clear-button.png)
+  ![Clear button when value is selected](src/assets/images/docs-clear-button.png)
 
 ### Saving
 - **Submit button** – When the value field is populated (for Date/Boolean/Enum types), a Submit button appears to save the values
@@ -73,8 +73,8 @@ This structure promotes reusability and keeps components focused and testable.
 
 <table>
 <tr>
-<td><img src="docs-saving-submit.png" alt="Submit with expression value" width="300"/></td>
-<td><img src="docs-saving-output.png" alt="Output after submit" width="300"/></td>
+<td><img src="src/assets/images/docs-saving-submit.png" alt="Submit with expression value" width="300"/></td>
+<td><img src="src/assets/images/docs-saving-output.png" alt="Output after submit" width="300"/></td>
 </tr>
 </table>
 
@@ -107,7 +107,8 @@ src/
 │   ├── languageOptions.js                # ISO 639-3 language options
 │   └── turnioExpressionSchema.js         # Turn.io expression schema
 └── assets/
-    └── field-types/                      # Turn.io field type icons
+    ├── field-types/                      # Turn.io field type icons
+    └── images/                           # README documentation screenshots
 ```
 
 ## Getting started
